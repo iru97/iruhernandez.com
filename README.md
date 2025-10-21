@@ -1,96 +1,105 @@
 # Portfolio Website - Iru Hernández
 
-A modern and interactive portfolio website showcasing my skills, projects and experience as a Frontend Developer.
-
-![Portfolio Screenshot](screenshot.png)
+A modern Vue 3 portfolio website showcasing my skills, projects and experience as a Frontend Developer.
 
 ## Overview
 
-This portfolio website is designed to highlight my professional experience, skills, and projects in a clean, modern, and interactive way. The website is built with HTML, CSS, and JavaScript, focusing on performance, accessibility, and smooth user experience.
+Modern, interactive portfolio built with Vue 3, TypeScript, and Tailwind CSS. Features an infinite carousel for projects, dark/light theme toggle, and smooth animations.
+
+## Tech Stack
+
+- **Vue 3** - Composition API, reactive components
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first styling
+- **Three.js** - 3D visualizations (planned)
+- **Font Awesome** - Icons
 
 ## Features
 
-- **Modern Design**: Clean and professional interface with a minimalist color palette.
-- **Responsive Layout**: Fully responsive design that looks great on all devices from mobile to desktop.
-- **Dark/Light Mode**: Toggle between dark and light themes, with preference saved to localStorage.
-- **Interactive Elements**: Animations, statistics counter, smooth scrolling and interactive UI components.
-- **Project Showcase**: Highlighting key projects with descriptions, technologies used, and links.
-- **Experience Timeline**: Visual representation of professional experience with detailed information.
-- **Skills Section**: Comprehensive display of technical skills and toolsets.
-- **Articles & Talks**: Section for sharing written content and presentations.
-- **Contact Form**: Interactive form for potential employers or collaborators to reach out.
-- **Custom Cursor**: Enhanced user experience with a custom cursor on desktop.
+- ✨ **Modern Design** - Clean, professional interface matching production site
+- 🎨 **Dark/Light Theme** - Toggle with localStorage persistence
+- 🎠 **Infinite Carousel** - Smooth project showcase with drag & wheel scroll
+- 📱 **Fully Responsive** - Mobile-first design
+- ⚡ **Performance Optimized** - Fast loading, service worker ready
+- 🎯 **SEO Ready** - Semantic HTML and meta tags
 
-## Technologies Used
+## Project Structure
 
-- **HTML5**: Semantic markup structure
-- **CSS3**: Custom properties, Flexbox, Grid, animations
-- **JavaScript**: DOM manipulation, Intersection Observer, event handling
-- **FontAwesome**: For icons
-- **Quicksand Font**: Modern and minimal typography
+```
+src/
+├── components/
+│   └── sections/         # Section components
+│       ├── HeroSection.vue
+│       ├── ProjectsSection.vue  # Infinite carousel
+│       ├── ExperienceSection.vue
+│       ├── SkillsSection.vue
+│       ├── ArticlesSection.vue
+│       └── ContactSection.vue
+├── composables/          # Reusable composition functions
+│   ├── useTheme.ts
+│   ├── useCustomCursor.ts
+│   └── useStatsAnimation.ts
+├── services/             # API services
+│   └── githubService.ts
+├── assets/               # Fonts, images, styles
+└── App.vue               # Main app component
+```
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Key Components
+
+### Projects Carousel
+- Infinite loop scroll
+- Mouse wheel & drag support
+- Snap-to-center effect
+- Real GitHub projects integration
+
+### Theme System
+- Dark/light mode toggle
+- System preference detection
+- Smooth transitions
+
+### Composables
+- `useTheme` - Theme management
+- `useCustomCursor` - Custom cursor logic
+- `useStatsAnimation` - Animated statistics
 
 ## Color Palette
 
-The website uses a custom earthy color palette:
+- **Primary**: `#197278` (Caribbean Current)
+- **Secondary**: `#283d3b` (Dark Slate Gray)
+- **Accent**: `#c44536` (Persian Red)
+- **Light**: `#edddd4` (Champagne Pink)
 
-- Dark Slate Gray: `#283d3b` (Dark background and accents)
-- Caribbean Current: `#197278` (Primary color)
-- Champagne Pink: `#edddd4` (Light background and text)
-- Persian Red: `#c44536` (Accent color for highlights)
-- Burnt Umber: `#772e25` (Darker accent variations)
+## Browser Support
 
-## File Structure
-
-```
-portfolio/
-├── index.html          # Main HTML file
-├── css/
-│   └── styles.css      # Main stylesheet
-├── js/
-│   └── main.js         # JavaScript functionality
-├── fonts/
-│   └── quicksand/      # Quicksand font files
-├── images/
-│   └── profile-pic.jpg # Profile picture
-└── README.md           # Project documentation
-```
-
-## Setup and Customization
-
-1. Clone the repository
-2. Modify the `index.html` file to update your personal information, projects, experience, etc.
-3. Adjust the styles in `css/styles.css` if needed
-4. Update the profile picture in the `images` folder
-5. Open `index.html` in a browser to view your portfolio
-
-## Customization Options
-
-- **Colors**: Edit the CSS variables in the `:root` section of the CSS file to change the color scheme
-- **Fonts**: Replace the font files in the `fonts` directory if you prefer a different typeface
-- **Content**: Modify the HTML to update personal information, projects, experience details
-- **Images**: Replace profile picture and project images as needed
-
-## Responsive Breakpoints
-
-- Mobile: Up to 767px
-- Tablet: 768px to 1023px
-- Desktop: 1024px and above
-
-## Browser Compatibility
-
-Tested and optimized for:
-
-- Chrome
-- Firefox
-- Safari
-- Edge
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ## Credits
 
-- Design inspired by modern portfolio trends
+- Design based on production site at [iruhernandez.com](https://iruhernandez.com)
 - Icons from [Font Awesome](https://fontawesome.com/)
-- Quicksand font by Andrew Paglinawan from [Google Fonts](https://fonts.google.com/specimen/Quicksand)
+- Quicksand font from [Google Fonts](https://fonts.google.com/specimen/Quicksand)
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+MIT License - feel free to use as reference for your own portfolio!
