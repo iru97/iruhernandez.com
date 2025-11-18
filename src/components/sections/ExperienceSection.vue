@@ -41,70 +41,97 @@
         </div>
       </div>
 
-      <div class="timeline">
-        <div
-          v-for="(job, index) in experience"
-          :key="index"
-          :class="['timeline-item', { active: activeIndex === index }]"
-        >
-          <div class="timeline-content">
-            <!-- Badges Section -->
-            <div class="badges-row">
-              <span v-if="isCurrent(job.period)" class="badge badge-current">Current</span>
-              <span class="badge badge-duration">{{ calculateDuration(job.period) }}</span>
-            </div>
+      <!-- Carousel Container -->
+      <div class="experience-carousel">
+        <transition name="fade-slide" mode="out-in">
+          <div
+            :key="activeIndex"
+            class="experience-card"
+          >
+            <div class="card-content">
+              <!-- Status & Duration Badges -->
+              <div class="badges-row">
+                <span v-if="isCurrent(experience[activeIndex].period)" class="badge badge-current">
+                  <i class="fas fa-circle"></i> Current Position
+                </span>
+                <span class="badge badge-duration">
+                  <i class="far fa-clock"></i> {{ calculateDuration(experience[activeIndex].period) }}
+                </span>
+              </div>
 
-            <!-- Title & Company -->
-            <h3 class="job-title">{{ job.title }}</h3>
-            <h4
-              :class="{ 'company-link': job.projectIds && job.projectIds.length > 0 }"
-              @click="job.projectIds && job.projectIds.length > 0 && handleCompanyClick(job.projectIds)"
-            >
-              {{ job.company }}
-              <i v-if="job.projectIds && job.projectIds.length > 0" class="fas fa-external-link-alt"></i>
-            </h4>
-            <span class="timeline-date">{{ job.period }}</span>
-
-            <!-- Metrics Section (only if metrics exist) -->
-            <div v-if="job.metrics && job.metrics.length > 0" class="metrics-section">
-              <span v-for="(metric, i) in job.metrics" :key="i" class="metric-pill">
-                {{ metric }}
-              </span>
-            </div>
-
-            <!-- Summary -->
-            <p class="job-summary">{{ job.summary }}</p>
-
-            <!-- Details Toggle -->
-            <div class="details-toggle" @click="toggleDetails(index)">
-              See details
-              <i
-                :class="
-                  job.showDetails ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
-                "
-              ></i>
-            </div>
-            <div class="details-content" :class="{ active: job.showDetails }">
-              <ul>
-                <li v-for="(detail, i) in job.details" :key="i">
-                  {{ detail }}
-                </li>
-              </ul>
-            </div>
-
-            <!-- Tech Stack -->
-            <div class="tech-stack">
-              <i
-                v-for="tech in job.techIcons"
-                :key="tech.class"
-                :class="tech.class + ' tooltip-container'"
-                :title="tech.title"
+              <!-- Title & Company -->
+              <h3 class="job-title">{{ experience[activeIndex].title }}</h3>
+              <h4
+                :class="{ 'company-link': experience[activeIndex].projectIds && experience[activeIndex].projectIds.length > 0 }"
+                @click="experience[activeIndex].projectIds && experience[activeIndex].projectIds.length > 0 && handleCompanyClick(experience[activeIndex].projectIds)"
               >
-                <span class="tooltip">{{ tech.tooltip }}</span>
-              </i>
+                {{ experience[activeIndex].company }}
+                <i v-if="experience[activeIndex].projectIds && experience[activeIndex].projectIds.length > 0" class="fas fa-external-link-alt"></i>
+              </h4>
+              <span class="timeline-date">
+                <i class="far fa-calendar-alt"></i> {{ experience[activeIndex].period }}
+              </span>
+
+              <!-- Metrics & Highlights Section -->
+              <div class="highlights-section">
+                <!-- Metrics Pills (only if metrics exist) -->
+                <div v-if="experience[activeIndex].metrics && experience[activeIndex].metrics.length > 0" class="metrics-row">
+                  <span class="section-label">Impact Metrics</span>
+                  <div class="metrics-pills">
+                    <span v-for="(metric, i) in experience[activeIndex].metrics" :key="i" class="metric-pill">
+                      <i class="fas fa-chart-line"></i> {{ metric }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Highlight Tags (only if highlights exist) -->
+                <div v-if="experience[activeIndex].highlights && experience[activeIndex].highlights.length > 0" class="highlights-row">
+                  <span class="section-label">Key Achievements</span>
+                  <div class="highlight-tags">
+                    <span v-for="(highlight, i) in experience[activeIndex].highlights" :key="i" class="highlight-tag">
+                      {{ highlight }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Summary -->
+              <p class="job-summary">{{ experience[activeIndex].summary }}</p>
+
+              <!-- Details Toggle -->
+              <div class="details-toggle" @click="toggleDetails(activeIndex)">
+                <span>{{ experience[activeIndex].showDetails ? 'Hide details' : 'See full details' }}</span>
+                <i :class="experience[activeIndex].showDetails ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+              </div>
+              <transition name="expand">
+                <div v-if="experience[activeIndex].showDetails" class="details-content">
+                  <ul>
+                    <li v-for="(detail, i) in experience[activeIndex].details" :key="i">
+                      {{ detail }}
+                    </li>
+                  </ul>
+                </div>
+              </transition>
+
+              <!-- Tech Stack -->
+              <div class="tech-stack-section">
+                <span class="section-label">Technologies & Tools</span>
+                <div
+                  v-for="(category, categoryName) in experience[activeIndex].techStack"
+                  :key="categoryName"
+                  class="tech-category"
+                >
+                  <span class="category-name">{{ categoryName }}</span>
+                  <div class="tech-badges">
+                    <span v-for="tech in category" :key="tech" class="tech-badge">
+                      {{ tech }}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
     </div>
   </section>
@@ -174,45 +201,26 @@ const experience = ref([
     projectIds: ["myolab-self", "myolab-demo"],
     summary:
       "Lead web-apps & cross-platform mobile front end with focus on performance, scalability, and smooth 3D/data-rich UX. Design UX flows and feature strategy for multi-model AI stack.",
-    showDetails: true,
+    highlights: [
+      "Multi-model AI Stack",
+      "3D Visualization",
+      "Streaming UIs",
+      "Performance Optimization",
+      "Feature Flags & A/B Testing",
+      "GA4/GTM Analytics"
+    ],
+    showDetails: false,
     details: [
       "Lead the web-apps & cross-platform mobile front end with a focus on performance, scalability, and smooth 3D/data-rich UX.",
       "Designed UX flows and feature strategy for a multi-model stack (in-house models + GPT), shipped streaming UIs with flags/fallbacks, and used lightweight evals to guide AI product decisions.",
       "Defined data contracts (request/response, versioning), error handling, performance targets, and safe releases (feature flags, gradual rollouts, A/B).",
       "Partnered continuously with backend, research, and 3D; aligned release trains and quality gates; instrumented product signals (GA4/GTM + FE tracing) to steer stability and roadmap outcomes.",
     ],
-    techIcons: [
-      {
-        class: "fab fa-vuejs",
-        title: "Vue 3",
-        tooltip: "Vue 3, Composition API, Pinia",
-      },
-      {
-        class: "fab fa-js",
-        title: "TypeScript",
-        tooltip: "TypeScript, Type-safe APIs",
-      },
-      {
-        class: "fas fa-cube",
-        title: "Three.js",
-        tooltip: "Three.js, TresJS, 3D visualization",
-      },
-      {
-        class: "fas fa-chart-bar",
-        title: "Chart.js",
-        tooltip: "Chart.js, Data visualization",
-      },
-      {
-        class: "fab fa-github",
-        title: "GitHub Actions",
-        tooltip: "GitHub Actions, CI/CD pipelines",
-      },
-      {
-        class: "fab fa-css3-alt",
-        title: "TailwindCSS",
-        tooltip: "TailwindCSS, Responsive design",
-      },
-    ],
+    techStack: {
+      "Frontend": ["Vue 3", "TypeScript", "Composition API", "Pinia", "TailwindCSS"],
+      "3D & Visualization": ["Three.js", "TresJS", "Chart.js"],
+      "DevOps & Tools": ["GitHub Actions", "Feature Flags", "A/B Testing"]
+    },
   },
   {
     period: "Feb 2021 - Jul 2024",
@@ -222,6 +230,12 @@ const experience = ref([
     summary:
       "Managed performance and scalability for 40k+ monthly active users and 1M+ registered users. Led migration from JSP/VanillaJS to robust TypeScript architecture.",
     metrics: ["40k+ MAU", "1M+ users"],
+    highlights: [
+      "Migration JSP → TypeScript",
+      "Mobile App from Scratch",
+      "Scale to Production",
+      "Performance & Standards"
+    ],
     showDetails: false,
     details: [
       "Managed performance and scalability for 40k+ monthly active users and 1M+ registered users.",
@@ -229,33 +243,12 @@ const experience = ref([
       "Built the mobile application from scratch to production and enhanced the web platform to meet evolving market (and new social media) demands.",
       "Collaborated closely with a multidisciplinary product team, aligning development with company goals and KPIs.",
     ],
-    techIcons: [
-      {
-        class: "fab fa-vuejs",
-        title: "Vue.js",
-        tooltip: "Vue.js, Vuex, Core architecture",
-      },
-      {
-        class: "fab fa-js",
-        title: "TypeScript",
-        tooltip: "TypeScript integration",
-      },
-      {
-        class: "fas fa-mobile-alt",
-        title: "Ionic",
-        tooltip: "Ionic, Capacitor, Mobile deployment",
-      },
-      {
-        class: "fab fa-css3-alt",
-        title: "Tailwind",
-        tooltip: "Tailwind, Custom design system",
-      },
-      {
-        class: "fab fa-git-alt",
-        title: "Git",
-        tooltip: "Git, Bitbucket, Workflow management",
-      },
-    ],
+    techStack: {
+      "Frontend": ["Vue.js", "TypeScript", "Vuex"],
+      "Mobile": ["Ionic", "Capacitor"],
+      "Styling": ["Tailwind", "Custom Design System"],
+      "Tools": ["Git", "Bitbucket"]
+    },
   },
   {
     period: "Feb 2020 - Feb 2021",
@@ -263,39 +256,24 @@ const experience = ref([
     company: "Sngular - Madrid, Spain",
     summary:
       "Engineered responsive user interfaces with Angular 9+ and PostCSS. Integrated components across brand teams on a unified platform.",
+    highlights: [
+      "Server-Side Rendering (SSR)",
+      "Multi-brand Platform",
+      "Component Architecture",
+      "Code Standards & Review"
+    ],
     showDetails: false,
     details: [
       "Engineered responsive user interfaces with Angular 9+ and PostCSS.",
       "Integrated components with a core team while coordinating across brand teams on a unified platform and adapting to specific brand details.",
       "Contributed to server-side rendering (SSR), adding code standards and code review rules.",
     ],
-    techIcons: [
-      {
-        class: "fab fa-angular",
-        title: "Angular 9+",
-        tooltip: "Angular 9+, Component architecture",
-      },
-      {
-        class: "fab fa-css3-alt",
-        title: "PostCSS",
-        tooltip: "PostCSS, Custom styling systems",
-      },
-      {
-        class: "fab fa-git-alt",
-        title: "Git",
-        tooltip: "Git workflows, Branching strategies",
-      },
-      {
-        class: "fab fa-bitbucket",
-        title: "Bitbucket",
-        tooltip: "Bitbucket, CI integrations",
-      },
-      {
-        class: "fas fa-server",
-        title: "SSR",
-        tooltip: "Server-side rendering, Performance optimization",
-      },
-    ],
+    techStack: {
+      "Frontend": ["Angular 9+", "Component Architecture"],
+      "Styling": ["PostCSS", "Custom Styling Systems"],
+      "Architecture": ["SSR", "Performance Optimization"],
+      "Tools": ["Git", "Bitbucket", "CI/CD"]
+    },
   },
   {
     period: "Mar 2018 - Feb 2020",
@@ -304,39 +282,24 @@ const experience = ref([
       "ULTEBRA Solutions · Atos · Sirokko - Tenerife & Gran Canaria, Spain",
     summary:
       "Progressed from junior to solid mid-level engineer, establishing coding standards, version control discipline, and delivery habits that shaped a current FE-focused path.",
+    highlights: [
+      "Junior → Mid-level Growth",
+      "End-to-end FullStack",
+      "Clean Architecture",
+      "Code Review Practices"
+    ],
     showDetails: false,
     details: [
       "Built and maintained web apps end-to-end: front end (Angular 2+, Vue.js, Ionic) and back-end services (.NET Core, Spring Boot, Rails) with relational databases (SQL Server, MySQL, Oracle, PostgreSQL).",
       "Adopted clean component architectures, reusable UI patterns, and code review practices; improved team workflows with Git, Trello/Slack, and Azure DevOps.",
       "Delivered features from spec to production across small products and larger enterprise contexts.",
     ],
-    techIcons: [
-      {
-        class: "fab fa-vuejs",
-        title: "Vue.js",
-        tooltip: "Vue.js, Frontend interfaces",
-      },
-      {
-        class: "fab fa-angular",
-        title: "Angular",
-        tooltip: "Angular 2+, Component architecture",
-      },
-      {
-        class: "fab fa-java",
-        title: "Java",
-        tooltip: "Spring Boot, Backend services",
-      },
-      {
-        class: "fas fa-database",
-        title: "SQL",
-        tooltip: "SQL Server, MySQL, Oracle, PostgreSQL",
-      },
-      {
-        class: "fab fa-git-alt",
-        title: "Git",
-        tooltip: "Git, Azure DevOps, Version control",
-      },
-    ],
+    techStack: {
+      "Frontend": ["Angular 2+", "Vue.js", "Ionic"],
+      "Backend": [".NET Core", "Spring Boot", "Rails"],
+      "Database": ["SQL Server", "MySQL", "Oracle", "PostgreSQL"],
+      "Tools": ["Git", "Azure DevOps", "Trello", "Slack"]
+    },
   },
 ]);
 
@@ -351,70 +314,31 @@ const handleCompanyClick = (projectIds: string[]) => {
   }
 };
 
-// Navigate to specific experience
+// Navigate to specific experience (carousel mode)
 const navigateToExperience = (index: number) => {
   if (index < 0 || index >= experience.value.length) return;
-
   activeIndex.value = index;
-
-  // Scroll to the experience card
-  const element = document.querySelectorAll('.timeline-item')[index] as HTMLElement;
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
 };
 
 // Keyboard navigation
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'ArrowDown') {
+  if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
     event.preventDefault();
     const nextIndex = Math.min(activeIndex.value + 1, experience.value.length - 1);
     navigateToExperience(nextIndex);
-  } else if (event.key === 'ArrowUp') {
+  } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
     event.preventDefault();
     const prevIndex = Math.max(activeIndex.value - 1, 0);
     navigateToExperience(prevIndex);
   }
 };
 
-// Intersection Observer for auto-updating active index
-let observer: IntersectionObserver | null = null;
-
 onMounted(() => {
-  // Add keyboard listener
   window.addEventListener('keydown', handleKeydown);
-
-  // Setup intersection observer
-  const options = {
-    root: null,
-    rootMargin: '-50% 0px -50% 0px',
-    threshold: 0
-  };
-
-  observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const index = Array.from(document.querySelectorAll('.timeline-item')).indexOf(entry.target);
-        if (index !== -1) {
-          activeIndex.value = index;
-        }
-      }
-    });
-  }, options);
-
-  // Observe all timeline items
-  setTimeout(() => {
-    document.querySelectorAll('.timeline-item').forEach(item => {
-      observer?.observe(item);
-    });
-  }, 100);
 });
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown);
-  if (observer) {
-    observer.disconnect();
-  }
 });
 </script>
 
