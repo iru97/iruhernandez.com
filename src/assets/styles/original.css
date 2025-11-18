@@ -280,6 +280,42 @@ nav {
   color: var(--primary);
 }
 
+/* Lab icon - destacado */
+.lab-icon {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white !important;
+  animation: pulse-lab 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(25, 114, 120, 0.4);
+}
+
+.lab-icon:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 0 20px rgba(25, 114, 120, 0.6);
+}
+
+@keyframes pulse-lab {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(25, 114, 120, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(25, 114, 120, 0.8);
+  }
+}
+
+/* Hide native cursor on desktop when custom cursor is active */
+@media (min-width: 1025px) {
+  body {
+    cursor: none;
+  }
+
+  a,
+  button,
+  [role="button"] {
+    cursor: none;
+  }
+}
+
 /* Dark mode styles for toolbar */
 .dark-theme header {
   background-color: var(--bg-secondary);
