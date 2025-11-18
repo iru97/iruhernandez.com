@@ -1884,21 +1884,6 @@ footer {
   color: var(--accent);
 }
 
-.details-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height var(--transition-speed);
-  margin-top: 0.5rem;
-}
-
-.details-content.active {
-  max-height: 500px;
-}
-
-.details-toggle.active i {
-  transform: rotate(180deg);
-}
-
 /* Ajustes de espaciado */
 .section-description {
   margin-bottom: 3rem;
