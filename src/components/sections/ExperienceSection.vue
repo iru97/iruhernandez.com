@@ -207,7 +207,10 @@ const experience = ref([
       "Streaming UIs",
       "Performance Optimization",
       "Feature Flags & A/B Testing",
-      "GA4/GTM Analytics"
+      "GA4/GTM Analytics",
+      "Data Contracts & Versioning",
+      "Cross-team Collaboration",
+      "UX Strategy & Product Design"
     ],
     showDetails: false,
     details: [
@@ -234,7 +237,9 @@ const experience = ref([
       "Migration JSP → TypeScript",
       "Mobile App from Scratch",
       "Scale to Production",
-      "Performance & Standards"
+      "Performance & Standards",
+      "Product Team Alignment",
+      "Development Standards"
     ],
     showDetails: false,
     details: [
@@ -260,7 +265,9 @@ const experience = ref([
       "Server-Side Rendering (SSR)",
       "Multi-brand Platform",
       "Component Architecture",
-      "Code Standards & Review"
+      "Code Standards & Review",
+      "Cross-brand Coordination",
+      "Responsive UI Engineering"
     ],
     showDetails: false,
     details: [
@@ -286,7 +293,10 @@ const experience = ref([
       "Junior → Mid-level Growth",
       "End-to-end FullStack",
       "Clean Architecture",
-      "Code Review Practices"
+      "Code Review Practices",
+      "Reusable UI Patterns",
+      "Multi-database Experience",
+      "Team Workflow Improvement"
     ],
     showDetails: false,
     details: [
