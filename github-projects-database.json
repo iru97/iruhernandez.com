@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "github_user": "iru97",
+    "fetched_date": "2025-11-17",
+    "total_repositories_found": 23,
+    "analyzed_repositories": 12
+  },
+  "repositories": [
+    {
+      "name": "datosenabierto.es",
+      "url": "https://github.com/iru97/datosenabierto.es",
+      "description": null,
+      "stars": 1,
+      "forks": 0,
+      "language": "Vue",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2025-02-22",
+      "updated_at": "2025-02-22",
+      "default_branch": "main",
+      "readme_summary": "Web application that makes Spain's Official State Bulletin (BOE) accessible through an interactive visualization platform. Built with Nuxt.js 3, Vue 3, Tailwind CSS, and Nitro. Features intuitive search with date range filtering, visual calendar selection, intelligent organization grouping bulletins by weeks, cross-platform responsive design, and analytics tools including statistics and distribution graphs.",
+      "tech_stack": ["Nuxt.js 3", "Vue 3", "Tailwind CSS", "Nitro", "TypeScript"],
+      "key_features": [
+        "Intuitive search with date range filtering and visual calendar selection",
+        "Intelligent organization grouping bulletins by weeks with hierarchical navigation",
+        "Cross-platform responsive design supporting mobile, tablets, and screen readers",
+        "Analytics tools including statistics, distribution graphs, and temporal trends",
+        "Server-Side Rendering for SEO optimization",
+        "Intelligent cache system with lazy loading and prefetching"
+      ],
+      "deployment": "Optimized for Netlify",
+      "images": []
+    },
+    {
+      "name": "ai-assistant",
+      "url": "https://github.com/iru97/ai-assistant",
+      "description": null,
+      "stars": 0,
+      "forks": 0,
+      "language": "TypeScript",
+      "topics": ["expo", "react", "react-native", "styled-components", "supabase-js", "typescript"],
+      "homepage": null,
+      "created_at": "2024-06-14",
+      "updated_at": "2025-02-09",
+      "default_branch": "main",
+      "readme_summary": "README not accessible or not present in the repository.",
+      "tech_stack": ["TypeScript", "React Native", "Expo", "Supabase", "Styled Components"],
+      "key_features": [],
+      "deployment": null,
+      "images": []
+    },
+    {
+      "name": "nuxtpokeapp",
+      "url": "https://github.com/iru97/nuxtpokeapp",
+      "description": "Poke App provided by Nuxt using PokeAPI",
+      "stars": 2,
+      "forks": 0,
+      "language": "Vue",
+      "topics": ["nuxt", "nuxt3", "typescript"],
+      "homepage": null,
+      "created_at": "2023-10-09",
+      "updated_at": "2024-06-18",
+      "default_branch": "main",
+      "readme_summary": "Nuxt 3 Minimal Starter project. A Pokemon application built with Nuxt 3 using the PokeAPI. Standard setup with npm/pnpm/yarn, development server on localhost:3000, and production build instructions.",
+      "tech_stack": ["Nuxt 3", "Vue", "TypeScript", "PokeAPI"],
+      "key_features": [
+        "Pokemon data from PokeAPI",
+        "Built with Nuxt 3 framework"
+      ],
+      "deployment": null,
+      "images": []
+    },
+    {
+      "name": "meshmotion.es",
+      "url": "https://github.com/iru97/meshmotion.es",
+      "description": null,
+      "stars": 1,
+      "forks": 0,
+      "language": "TypeScript",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2025-10-25",
+      "updated_at": "2025-11-15",
+      "default_branch": "main",
+      "readme_summary": "Advanced GLB Animation Viewer built with Next.js 15, React Three Fiber, and TypeScript. Enables users to load, preview, and manipulate 3D models with professional-grade animation controls. Features glassmorphism aesthetics, GLB animation playback, animation retargeting for Mixamo assets, professional lighting systems, timeline editing with frame-level control, and multiple material visualization modes.",
+      "tech_stack": ["Next.js 15", "TypeScript", "React Three Fiber", "Three.js", "Zustand", "Shadcn UI", "Radix UI", "Tailwind CSS", "GSAP", "@xzdarcy/react-timeline-editor"],
+      "key_features": [
+        "Glassmorphism aesthetics",
+        "React Three Fiber-powered 3D visualization",
+        "GLB animation playback",
+        "Animation retargeting for Mixamo assets",
+        "Professional lighting systems",
+        "Timeline editing with frame-level control",
+        "Multiple material visualization modes (Textured, Clay, Wireframe, X-Ray, PBR)",
+        "Cross-device responsiveness",
+        "Drag-drop or upload GLB files",
+        "Playback controls (play/pause, speed adjustment, looping, timeline scrubbing)",
+        "Multiple lighting presets (Studio, Soft, Dramatic, Outdoor, Custom)"
+      ],
+      "deployment": null,
+      "images": []
+    },
+    {
+      "name": "iruhernandez.com",
+      "url": "https://github.com/iru97/iruhernandez.com",
+      "description": null,
+      "stars": 0,
+      "forks": 0,
+      "language": "Vue",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2025-10-21",
+      "updated_at": "2025-10-21",
+      "default_branch": "main",
+      "readme_summary": "Modern Vue 3 portfolio by Iru Hernández showcasing frontend development work. Features clean, professional interface matching production site with dark/light theme toggling and an infinite carousel for project displays. Includes responsive mobile-first design, performance optimization with service worker readiness, semantic HTML for SEO, and infinite loop scroll carousel supporting mouse wheel and drag interactions with snap-to-center functionality.",
+      "tech_stack": ["Vue 3", "Composition API", "TypeScript", "Vite", "Tailwind CSS", "Font Awesome", "Three.js (planned)"],
+      "key_features": [
+        "Dark/light theme toggling with system preference detection",
+        "Infinite carousel with mouse wheel and drag interactions",
+        "Responsive mobile-first design",
+        "Performance optimization with service worker readiness",
+        "Semantic HTML for SEO",
+        "Snap-to-center functionality",
+        "GitHub service integration for displaying real projects",
+        "Custom cursor",
+        "Stats animation"
+      ],
+      "design_system": {
+        "primary_color": "#197278 (Caribbean Current)",
+        "secondary_color": "#283d3b (Dark Slate Gray)",
+        "accent_color": "#c44536 (Persian Red)",
+        "light_color": "#edddd4 (Champagne Pink)"
+      },
+      "deployment": "iruhernandez.com",
+      "images": []
+    },
+    {
+      "name": "three-portfolio",
+      "url": "https://github.com/iru97/three-portfolio",
+      "description": "Portfolio created with three.js",
+      "stars": 2,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": ["css3", "html5", "javascript", "threejs"],
+      "homepage": null,
+      "created_at": "2024-02-17",
+      "updated_at": "2024-06-18",
+      "default_branch": "main",
+      "readme_summary": "Portfolio created with Three.js and Vite. A 3D portfolio showcasing work using Three.js library for 3D graphics and visualizations in the browser.",
+      "tech_stack": ["Three.js", "Vite", "JavaScript", "HTML5", "CSS3"],
+      "key_features": [
+        "3D graphics and visualizations",
+        "Built with Three.js library",
+        "Fast build with Vite"
+      ],
+      "deployment": "https://iru97.github.io/three-portfolio/",
+      "images": []
+    },
+    {
+      "name": "advanced-typescript-examples",
+      "url": "https://github.com/iru97/advanced-typescript-examples",
+      "description": null,
+      "stars": 3,
+      "forks": 0,
+      "language": "TypeScript",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2022-05-13",
+      "updated_at": "2024-02-20",
+      "default_branch": "main",
+      "readme_summary": "Advanced TypeScript examples repository with accompanying presentation slides. Contains demonstrations of advanced TypeScript patterns and techniques.",
+      "tech_stack": ["TypeScript"],
+      "key_features": [
+        "Advanced TypeScript patterns",
+        "Presentation slides at https://slides.com/iruakabubi/advanced-typescript"
+      ],
+      "deployment": null,
+      "images": [],
+      "slides_url": "https://slides.com/iruakabubi/advanced-typescript"
+    },
+    {
+      "name": "node-sendmailer",
+      "url": "https://github.com/iru97/node-sendmailer",
+      "description": "This is a api project that send an email with the information received",
+      "stars": 3,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2019-09-05",
+      "updated_at": "2024-02-20",
+      "default_branch": "master",
+      "readme_summary": "Node.js API project that functions as an email delivery service. Accepts data and forwards it via email.",
+      "tech_stack": ["Node.js", "JavaScript"],
+      "key_features": [
+        "Email delivery API",
+        "Accepts data and sends via email"
+      ],
+      "deployment": null,
+      "images": []
+    },
+    {
+      "name": "iru97",
+      "url": "https://github.com/iru97/iru97",
+      "description": null,
+      "stars": 3,
+      "forks": 0,
+      "language": null,
+      "topics": ["about-me"],
+      "homepage": null,
+      "created_at": "2024-02-18",
+      "updated_at": "2025-02-06",
+      "default_branch": "main",
+      "readme_summary": "GitHub profile README. Frontend-focused software developer currently working as a contractor for an embodied AI startup. Learning frontend architectures, advanced Vue.js patterns, Vite, Three.js, AI tools, LLMs, and product software development.",
+      "tech_stack": {
+        "frontend": ["React", "Vue.js", "Angular", "TypeScript", "JavaScript", "Chart.js", "D3.js", "Nuxt", "Firebase", "Tailwind CSS", "Jest", "Ionic", "Capacitor"],
+        "backend": ["Node.js", "Express.js", "Java", "Spring Framework", "C#"],
+        "devops": ["Linux", "Git", "Bash", "Docker"]
+      },
+      "key_features": [],
+      "contact": {
+        "email": "iruhsan@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/iru-hernandez/",
+        "github": "https://github.com/iru97"
+      },
+      "deployment": null,
+      "images": []
+    },
+    {
+      "name": "my-cv",
+      "url": "https://github.com/iru97/my-cv",
+      "description": "I want to share my CV with an original format.",
+      "stars": 1,
+      "forks": 0,
+      "language": null,
+      "topics": [],
+      "homepage": null,
+      "created_at": "2020-01-22",
+      "updated_at": "2020-08-29",
+      "default_branch": "master",
+      "readme_summary": "CV project with distinctive presentation approach. README not accessible.",
+      "tech_stack": [],
+      "key_features": [
+        "Original CV format"
+      ],
+      "deployment": null,
+      "images": []
+    },
+    {
+      "name": "typescript.service.boilerplate",
+      "url": "https://github.com/iru97/typescript.service.boilerplate",
+      "description": "TypeScript application, service or microservice boilerplate",
+      "stars": 2,
+      "forks": 0,
+      "language": "TypeScript",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2021-07-25",
+      "updated_at": "2024-02-20",
+      "default_branch": "master",
+      "readme_summary": "Forked repository from ddialar/typescript.service.boilerplate. TypeScript boilerplate for applications, services, or microservices.",
+      "tech_stack": ["TypeScript"],
+      "key_features": [
+        "Boilerplate for TypeScript applications",
+        "Service and microservice template"
+      ],
+      "deployment": null,
+      "images": [],
+      "forked_from": "https://github.com/ddialar/typescript.service.boilerplate"
+    },
+    {
+      "name": "husky-and-jest",
+      "url": "https://github.com/iru97/husky-and-jest",
+      "description": "This is a project to start with git hooks",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": [],
+      "homepage": null,
+      "created_at": "2019-08-20",
+      "updated_at": "2024-02-20",
+      "default_branch": "master",
+      "readme_summary": "Educational resource for learning about git hooks integration with development tools. Demonstrates Husky and Jest integration.",
+      "tech_stack": ["JavaScript", "Husky", "Jest"],
+      "key_features": [
+        "Git hooks integration",
+        "Husky setup example",
+        "Jest testing integration"
+      ],
+      "deployment": null,
+      "images": []
+    }
+  ],
+  "other_repositories": [
+    {
+      "name": "awesome-design-system",
+      "url": "https://github.com/iru97/awesome-design-system",
+      "description": "A collection of bookmarks, resources and articles of design systems...",
+      "stars": 2,
+      "forks": 0,
+      "language": null,
+      "topics": []
+    },
+    {
+      "name": "awesome-learning",
+      "url": "https://github.com/iru97/awesome-learning",
+      "description": "A curated list of awesome learning material",
+      "stars": 2,
+      "forks": 0,
+      "language": null,
+      "topics": []
+    },
+    {
+      "name": "beginners-typescript-tutorial",
+      "url": "https://github.com/iru97/beginners-typescript-tutorial",
+      "description": "An interactive TypeScript tutorial for beginners",
+      "stars": 2,
+      "forks": 0,
+      "language": null,
+      "topics": [],
+      "homepage": "https://totaltypescript.com"
+    },
+    {
+      "name": "Front-end-Developer-Interview-Questions",
+      "url": "https://github.com/iru97/Front-end-Developer-Interview-Questions",
+      "description": "A list of helpful front-end related questions you can use to interview...",
+      "stars": 2,
+      "forks": 2,
+      "language": null,
+      "topics": [],
+      "homepage": "https://h5bp.org/Front-end-Developer-Interview-Questions/"
+    },
+    {
+      "name": "auto-publish",
+      "url": "https://github.com/iru97/auto-publish",
+      "description": null,
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": []
+    },
+    {
+      "name": "language-module-exercises",
+      "url": "https://github.com/iru97/language-module-exercises",
+      "description": "JS/TS exercises of Lemoncode frontend master",
+      "stars": 1,
+      "forks": 0,
+      "language": "JavaScript",
+      "topics": []
+    },
+    {
+      "name": "nuestrodinero-frontend",
+      "url": "https://github.com/iru97/nuestrodinero-frontend",
+      "description": null,
+      "stars": 1,
+      "forks": 0,
+      "language": null,
+      "topics": []
+    },
+    {
+      "name": "vue-draggable-examples",
+      "url": "https://github.com/iru97/vue-draggable-examples",
+      "description": "Data truncated",
+      "stars": null,
+      "forks": null,
+      "language": null,
+      "topics": []
+    }
+  ],
+  "requested_but_not_found": [
+    {
+      "name": "fit-expo-app",
+      "status": "Not found in iru97's repositories",
+      "note": "No repository with this exact name or similar variations found"
+    },
+    {
+      "name": "analyticsmind",
+      "status": "Not found in iru97's repositories",
+      "note": "No repository matching analyticsmind.es found. May be a deployed project without a public repository or under a different name"
+    },
+    {
+      "name": "worldtime",
+      "status": "Not found in iru97's repositories",
+      "note": "No repository matching worldtime.es found. May be a deployed project without a public repository or under a different name"
+    },
+    {
+      "name": "lab",
+      "status": "Not found in iru97's repositories",
+      "note": "No repository matching lab.iruhernandez.com found. May be a deployed project without a public repository or under a different name"
+    }
+  ],
+  "notes": [
+    "Total of 23 repositories found for user iru97",
+    "12 repositories analyzed in detail with README content",
+    "4 requested repositories were not found (fit-expo-app, analyticsmind, worldtime, lab)",
+    "Some repositories may be private, archived, or under different names",
+    "Most repositories have minimal or no README images",
+    "Several repositories are forks or learning materials",
+    "Main focus areas: TypeScript, Vue.js, React, frontend development, 3D graphics (Three.js)"
+  ]
+}

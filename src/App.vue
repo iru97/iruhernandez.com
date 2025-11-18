@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <!-- Custom cursor -->
-    <div class="cursor"></div>
-
     <!-- Header / Toolbar -->
     <header>
       <div class="toolbar">
@@ -37,6 +34,14 @@
         >
           <i :class="isDark ? 'fas fa-sun' : 'fas fa-moon'"></i>
         </button>
+        <a
+          href="https://lab.iruhernandez.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="tool-icon lab-icon"
+        >
+          <i class="fas fa-flask"></i>
+        </a>
       </div>
     </header>
 
@@ -78,6 +83,7 @@ import ExperienceSection from "./components/sections/ExperienceSection.vue";
 import SkillsSection from "./components/sections/SkillsSection.vue";
 import ArticlesSection from "./components/sections/ArticlesSection.vue";
 import ContactSection from "./components/sections/ContactSection.vue";
+import { useCustomCursor } from "./composables/useCustomCursor";
 
 const isDark = ref(false);
 
@@ -86,6 +92,9 @@ const toggleTheme = () => {
   document.body.classList.toggle("dark-theme");
   localStorage.setItem("theme", isDark.value ? "dark" : "light");
 };
+
+// Initialize custom cursor
+useCustomCursor();
 
 onMounted(() => {
   // Initialize theme

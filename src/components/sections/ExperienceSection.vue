@@ -15,7 +15,13 @@
           <span class="timeline-date">{{ job.period }}</span>
           <div class="timeline-content">
             <h3>{{ job.title }}</h3>
-            <h4>{{ job.company }}</h4>
+            <h4
+              :class="{ 'company-link': job.projectIds && job.projectIds.length > 0 }"
+              @click="job.projectIds && job.projectIds.length > 0 && handleCompanyClick(job.projectIds)"
+            >
+              {{ job.company }}
+              <i v-if="job.projectIds && job.projectIds.length > 0" class="fas fa-external-link-alt"></i>
+            </h4>
             <p>{{ job.summary }}</p>
             <div class="details-toggle" @click="toggleDetails(index)">
               See details
@@ -51,12 +57,18 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useProjects } from "../../composables/useProjects";
+import { useProjectNavigation } from "../../composables/useProjectNavigation";
+
+const { allProjects } = useProjects();
+const { openProjectById } = useProjectNavigation();
 
 const experience = ref([
   {
     period: "Aug 2024 - Present",
     title: "Technical Staff & Software Engineering",
     company: "MyoLab AI - New York, USA",
+    projectIds: ["myolab-self", "myolab-demo"],
     summary:
       "Lead web-apps & cross-platform mobile front end with focus on performance, scalability, and smooth 3D/data-rich UX. Design UX flows and feature strategy for multi-model AI stack.",
     showDetails: true,
@@ -103,6 +115,7 @@ const experience = ref([
     period: "Feb 2021 - Jul 2024",
     title: "Frontend Developer",
     company: "Metricool - Madrid, Spain",
+    projectIds: ["metricool", "metricool-mobile"],
     summary:
       "Managed performance and scalability for 40k+ monthly active users and 1M+ registered users. Led migration from JSP/VanillaJS to robust TypeScript architecture.",
     showDetails: false,
@@ -226,4 +239,32 @@ const experience = ref([
 const toggleDetails = (index: number) => {
   experience.value[index].showDetails = !experience.value[index].showDetails;
 };
+
+const handleCompanyClick = (projectIds: string[]) => {
+  // Open the first project (or could show a menu if multiple)
+  if (projectIds.length > 0) {
+    openProjectById(projectIds[0], allProjects.value, true);
+  }
+};
 </script>
+
+<style scoped>
+.company-link {
+  cursor: pointer;
+  color: var(--primary);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.company-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.company-link i {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+</style>
