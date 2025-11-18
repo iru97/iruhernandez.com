@@ -6,15 +6,56 @@
         My career path spans diverse sectors and technologies, always focused on
         delivering robust frontend solutions.
       </p>
+
+      <!-- Timeline Navigator -->
+      <div class="timeline-navigator">
+        <div class="navigator-dots">
+          <button
+            v-for="(job, index) in experience"
+            :key="index"
+            :class="['nav-dot', { active: activeIndex === index }]"
+            @click="navigateToExperience(index)"
+            :aria-label="`Navigate to ${job.company}`"
+          >
+            <span class="dot-tooltip">{{ job.company.split(' - ')[0] }}</span>
+          </button>
+        </div>
+        <div class="navigator-info">
+          <span class="experience-counter">{{ activeIndex + 1 }} / {{ experience.length }}</span>
+          <div class="navigator-arrows">
+            <button
+              @click="navigateToExperience(activeIndex - 1)"
+              :disabled="activeIndex === 0"
+              aria-label="Previous experience"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button
+              @click="navigateToExperience(activeIndex + 1)"
+              :disabled="activeIndex === experience.length - 1"
+              aria-label="Next experience"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="timeline">
         <div
           v-for="(job, index) in experience"
           :key="index"
-          class="timeline-item"
+          :class="['timeline-item', { active: activeIndex === index }]"
         >
-          <span class="timeline-date">{{ job.period }}</span>
           <div class="timeline-content">
-            <h3>{{ job.title }}</h3>
+            <!-- Badges Section -->
+            <div class="badges-row">
+              <span v-if="isCurrent(job.period)" class="badge badge-current">Current</span>
+              <span class="badge badge-duration">{{ calculateDuration(job.period) }}</span>
+            </div>
+
+            <!-- Title & Company -->
+            <h3 class="job-title">{{ job.title }}</h3>
             <h4
               :class="{ 'company-link': job.projectIds && job.projectIds.length > 0 }"
               @click="job.projectIds && job.projectIds.length > 0 && handleCompanyClick(job.projectIds)"
@@ -22,7 +63,19 @@
               {{ job.company }}
               <i v-if="job.projectIds && job.projectIds.length > 0" class="fas fa-external-link-alt"></i>
             </h4>
-            <p>{{ job.summary }}</p>
+            <span class="timeline-date">{{ job.period }}</span>
+
+            <!-- Metrics Section (only if metrics exist) -->
+            <div v-if="job.metrics && job.metrics.length > 0" class="metrics-section">
+              <span v-for="(metric, i) in job.metrics" :key="i" class="metric-pill">
+                {{ metric }}
+              </span>
+            </div>
+
+            <!-- Summary -->
+            <p class="job-summary">{{ job.summary }}</p>
+
+            <!-- Details Toggle -->
             <div class="details-toggle" @click="toggleDetails(index)">
               See details
               <i
@@ -38,6 +91,8 @@
                 </li>
               </ul>
             </div>
+
+            <!-- Tech Stack -->
             <div class="tech-stack">
               <i
                 v-for="tech in job.techIcons"
@@ -56,12 +111,60 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useProjects } from "../../composables/useProjects";
 import { useProjectNavigation } from "../../composables/useProjectNavigation";
 
 const { allProjects } = useProjects();
 const { openProjectById } = useProjectNavigation();
+
+// Active experience tracking
+const activeIndex = ref(0);
+const timelineItems = ref<HTMLElement[]>([]);
+
+// Helper function to calculate duration from period string
+const calculateDuration = (period: string): string => {
+  const parts = period.split(" - ");
+  if (parts.length !== 2) return "";
+
+  const startStr = parts[0].trim();
+  const endStr = parts[1].trim();
+
+  const monthMap: { [key: string]: number } = {
+    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+  };
+
+  const parseDate = (dateStr: string): Date => {
+    if (dateStr === "Present") {
+      return new Date();
+    }
+    const [month, year] = dateStr.split(" ");
+    return new Date(parseInt(year), monthMap[month], 1);
+  };
+
+  const start = parseDate(startStr);
+  const end = parseDate(endStr);
+
+  const diffMs = end.getTime() - start.getTime();
+  const diffMonths = Math.round(diffMs / (1000 * 60 * 60 * 24 * 30.44));
+
+  const years = Math.floor(diffMonths / 12);
+  const months = diffMonths % 12;
+
+  if (years === 0) {
+    return `${months}mo`;
+  } else if (months === 0) {
+    return `${years}y`;
+  } else {
+    return `${years}y ${months}mo`;
+  }
+};
+
+// Check if job is current
+const isCurrent = (period: string): boolean => {
+  return period.includes("Present");
+};
 
 const experience = ref([
   {
@@ -118,6 +221,7 @@ const experience = ref([
     projectIds: ["metricool", "metricool-mobile"],
     summary:
       "Managed performance and scalability for 40k+ monthly active users and 1M+ registered users. Led migration from JSP/VanillaJS to robust TypeScript architecture.",
+    metrics: ["40k+ MAU", "1M+ users"],
     showDetails: false,
     details: [
       "Managed performance and scalability for 40k+ monthly active users and 1M+ registered users.",
@@ -246,6 +350,72 @@ const handleCompanyClick = (projectIds: string[]) => {
     openProjectById(projectIds[0], allProjects.value, true);
   }
 };
+
+// Navigate to specific experience
+const navigateToExperience = (index: number) => {
+  if (index < 0 || index >= experience.value.length) return;
+
+  activeIndex.value = index;
+
+  // Scroll to the experience card
+  const element = document.querySelectorAll('.timeline-item')[index] as HTMLElement;
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+};
+
+// Keyboard navigation
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'ArrowDown') {
+    event.preventDefault();
+    const nextIndex = Math.min(activeIndex.value + 1, experience.value.length - 1);
+    navigateToExperience(nextIndex);
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault();
+    const prevIndex = Math.max(activeIndex.value - 1, 0);
+    navigateToExperience(prevIndex);
+  }
+};
+
+// Intersection Observer for auto-updating active index
+let observer: IntersectionObserver | null = null;
+
+onMounted(() => {
+  // Add keyboard listener
+  window.addEventListener('keydown', handleKeydown);
+
+  // Setup intersection observer
+  const options = {
+    root: null,
+    rootMargin: '-50% 0px -50% 0px',
+    threshold: 0
+  };
+
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const index = Array.from(document.querySelectorAll('.timeline-item')).indexOf(entry.target);
+        if (index !== -1) {
+          activeIndex.value = index;
+        }
+      }
+    });
+  }, options);
+
+  // Observe all timeline items
+  setTimeout(() => {
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      observer?.observe(item);
+    });
+  }, 100);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+  if (observer) {
+    observer.disconnect();
+  }
+});
 </script>
 
 <style scoped>
