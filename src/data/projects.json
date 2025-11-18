@@ -1,0 +1,760 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-18T18:41:01.199Z",
+  "projects": [
+    {
+      "id": "meshmotion",
+      "name": "MeshMotion",
+      "shortDescription": "Advanced 3D GLB animation viewer with professional controls",
+      "fullDescription": "Advanced GLB Animation Viewer built with Next.js 15, React Three Fiber, and TypeScript. Enables users to load, preview, and manipulate 3D models with professional-grade animation controls. Features glassmorphism aesthetics, GLB animation playback, animation retargeting for Mixamo assets, professional lighting systems, timeline editing with frame-level control, and multiple material visualization modes.",
+      "thumbnail": "/screenshots/meshmotion/main.png",
+      "logo": "/screenshots/meshmotion/meshmotion-logo-icon.png",
+      "images": [
+        {
+          "url": "/screenshots/meshmotion/main.png",
+          "alt": "meshmotion main screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/meshmotion/Screenshot 2025-11-13 170334.png",
+          "alt": "meshmotion screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/meshmotion/Screenshot 2025-11-14 144221.png",
+          "alt": "meshmotion screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/meshmotion/Screenshot 2025-11-14 144312.png",
+          "alt": "meshmotion screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "owned",
+      "category": "3d-graphics",
+      "featured": true,
+      "tags": [],
+      "techStack": [
+        "Next.js 15",
+        "TypeScript",
+        "React Three Fiber",
+        "Three.js",
+        "Zustand",
+        "Shadcn UI",
+        "Radix UI",
+        "Tailwind CSS",
+        "GSAP",
+        "@xzdarcy/react-timeline-editor"
+      ],
+      "github": {
+        "url": "https://github.com/iru97/meshmotion.es",
+        "stars": 1,
+        "forks": 0,
+        "language": "TypeScript",
+        "lastUpdate": "2025-11-15",
+        "topics": []
+      },
+      "liveUrl": "https://meshmotion.es",
+      "features": [
+        "Glassmorphism aesthetics",
+        "React Three Fiber-powered 3D visualization",
+        "GLB animation playback",
+        "Animation retargeting for Mixamo assets",
+        "Professional lighting systems",
+        "Timeline editing with frame-level control",
+        "Multiple material visualization modes (Textured, Clay, Wireframe, X-Ray, PBR)",
+        "Cross-device responsiveness",
+        "Drag-drop or upload GLB files",
+        "Playback controls (play/pause, speed adjustment, looping, timeline scrubbing)",
+        "Multiple lighting presets (Studio, Soft, Dramatic, Outdoor, Custom)"
+      ],
+      "lastUpdated": "2025-11-15"
+    },
+    {
+      "id": "analyticsmind",
+      "name": "AnalyticsMind",
+      "shortDescription": "AI-powered Google Analytics platform with intelligent insights and custom dashboards",
+      "fullDescription": "AnalyticsMind is a next-generation Google Analytics platform that combines the power of AI (Anthropic Claude & OpenAI) with advanced data visualization to deliver actionable insights. Built with Next.js 15 and modern technologies, it transforms raw GA4 data into intelligent, customizable dashboards with drag-and-drop widgets, automated reporting, and AI-powered analysis that helps businesses make data-driven decisions faster.",
+      "thumbnail": "/screenshots/analyticsmind/main.png",
+      "logo": "/screenshots/analyticsmind/favico.png",
+      "logoFull": "/screenshots/analyticsmind/logo-full.png",
+      "images": [
+        {
+          "url": "/screenshots/analyticsmind/main.png",
+          "alt": "analyticsmind main screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "owned",
+      "category": "saas",
+      "featured": true,
+      "tags": [],
+      "techStack": [
+        "Next.js 15",
+        "React 18",
+        "TypeScript",
+        "Google Analytics Data API",
+        "Anthropic AI SDK",
+        "OpenAI",
+        "Prisma",
+        "PostgreSQL",
+        "NextAuth v5",
+        "Recharts",
+        "TanStack Query",
+        "Radix UI",
+        "Framer Motion",
+        "React Grid Layout",
+        "Tailwind CSS"
+      ],
+      "liveUrl": "https://analyticsmind.es",
+      "features": [
+        "Real-time Google Analytics 4 data integration",
+        "AI-powered insights with Claude & GPT models",
+        "Drag-and-drop customizable dashboard builder",
+        "Interactive data visualizations with Recharts",
+        "Automated report generation and scheduling",
+        "Export dashboards to PDF with custom branding",
+        "Advanced filtering, segmentation, and date comparisons",
+        "Multi-property and multi-view support",
+        "Role-based access control with NextAuth",
+        "Responsive design with mobile optimization",
+        "Real-time data synchronization",
+        "Custom metrics and calculated fields"
+      ],
+      "lastUpdated": "2025-11-18T18:41:01.194Z"
+    },
+    {
+      "id": "worldtime",
+      "name": "WorldTime",
+      "shortDescription": "Elegant world clock and timezone converter for global teams",
+      "fullDescription": "A beautiful and intuitive world clock application designed for remote teams and international collaboration. Features real-time timezone conversion, meeting scheduler, and visual time comparison to help coordinate across different time zones effortlessly.",
+      "thumbnail": "/screenshots/worldtime/main.png",
+      "images": [
+        {
+          "url": "/screenshots/worldtime/main.png",
+          "alt": "worldtime main screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "owned",
+      "category": "web-app",
+      "featured": true,
+      "tags": [],
+      "techStack": [
+        "Vue 3",
+        "TypeScript",
+        "Moment-Timezone",
+        "Vite",
+        "Tailwind CSS"
+      ],
+      "liveUrl": "https://worldtime.es",
+      "features": [
+        "Real-time world clock with multiple timezones",
+        "Smart timezone converter with DST support",
+        "Meeting time finder for multiple locations",
+        "Visual timeline comparison",
+        "Favorite locations quick access",
+        "UTC offset display",
+        "Search cities and timezones",
+        "Clean, minimalist interface",
+        "Offline support with PWA",
+        "Responsive mobile-first design"
+      ],
+      "lastUpdated": "2025-11-18T18:41:01.195Z"
+    },
+    {
+      "id": "datosabiertos",
+      "name": "Datos Abiertos",
+      "shortDescription": "Spanish government open data visualization platform",
+      "fullDescription": "Web application that makes Spain's Official State Bulletin (BOE) accessible through an interactive visualization platform. Built with Nuxt.js 3, Vue 3, Tailwind CSS, and Nitro. Features intuitive search with date range filtering, visual calendar selection, intelligent organization grouping bulletins by weeks, cross-platform responsive design, and analytics tools including statistics and distribution graphs.",
+      "thumbnail": "/projects/placeholder.jpg",
+      "images": [],
+      "type": "owned",
+      "category": "data-viz",
+      "featured": true,
+      "tags": [],
+      "techStack": [
+        "Nuxt.js 3",
+        "Vue 3",
+        "Tailwind CSS",
+        "Nitro",
+        "TypeScript"
+      ],
+      "github": {
+        "url": "https://github.com/iru97/datosenabierto.es",
+        "stars": 1,
+        "forks": 0,
+        "language": "Vue",
+        "lastUpdate": "2025-02-22",
+        "topics": []
+      },
+      "liveUrl": "https://datosenabiertos.es",
+      "features": [
+        "Intuitive search with date range filtering and visual calendar selection",
+        "Intelligent organization grouping bulletins by weeks with hierarchical navigation",
+        "Cross-platform responsive design supporting mobile, tablets, and screen readers",
+        "Analytics tools including statistics, distribution graphs, and temporal trends",
+        "Server-Side Rendering for SEO optimization",
+        "Intelligent cache system with lazy loading and prefetching"
+      ],
+      "lastUpdated": "2025-02-22"
+    },
+    {
+      "id": "lab",
+      "name": "Experimental Lab",
+      "shortDescription": "Interactive playground for experimenting with cutting-edge web technologies",
+      "fullDescription": "A living showcase of experimental web projects and proof-of-concepts. This lab serves as a sandbox environment for testing emerging web technologies, design patterns, and innovative UI/UX concepts before integrating them into production applications.",
+      "thumbnail": "/screenshots/lab/main.png",
+      "images": [
+        {
+          "url": "/screenshots/lab/main.png",
+          "alt": "lab main screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/lab/Screenshot 2025-06-23 005155.png",
+          "alt": "lab screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/lab/Screenshot 2025-06-23 005220.png",
+          "alt": "lab screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/lab/Screenshot 2025-06-23 005315.png",
+          "alt": "lab screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/lab/Screenshot 2025-06-23 005449.png",
+          "alt": "lab screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/lab/Screenshot 2025-07-22 185028.png",
+          "alt": "lab screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/lab/Screenshot 2025-07-31 132408.png",
+          "alt": "lab screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "owned",
+      "category": "web-app",
+      "featured": true,
+      "tags": [],
+      "techStack": [
+        "Vue 3",
+        "React",
+        "TypeScript",
+        "Three.js",
+        "WebGL",
+        "Canvas API",
+        "Web Animations API",
+        "Vite"
+      ],
+      "liveUrl": "https://lab.iruhernandez.com",
+      "features": [
+        "Interactive demos of web technologies",
+        "WebGL and Three.js experiments",
+        "CSS animations and transitions showcase",
+        "Component library prototypes",
+        "API integration examples",
+        "Performance optimization tests",
+        "Accessibility experiments",
+        "Responsive design patterns",
+        "Dark mode implementations",
+        "Micro-interactions gallery"
+      ],
+      "lastUpdated": "2025-11-18T18:41:01.196Z"
+    },
+    {
+      "id": "portfolio",
+      "name": "iruhernandez.com",
+      "shortDescription": "Modern Vue 3 portfolio with custom features",
+      "fullDescription": "Modern Vue 3 portfolio by Iru Hernández showcasing frontend development work. Features clean, professional interface matching production site with dark/light theme toggling and an infinite carousel for project displays. Includes responsive mobile-first design, performance optimization with service worker readiness, semantic HTML for SEO, and infinite loop scroll carousel supporting mouse wheel and drag interactions with snap-to-center functionality.",
+      "thumbnail": "/screenshots/iruhernandez/main.png",
+      "images": [
+        {
+          "url": "/screenshots/iruhernandez/main.png",
+          "alt": "portfolio main screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "owned",
+      "category": "web-app",
+      "featured": true,
+      "tags": [],
+      "techStack": [
+        "Vue 3",
+        "Composition API",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Font Awesome",
+        "Three.js (planned)"
+      ],
+      "github": {
+        "url": "https://github.com/iru97/iruhernandez.com",
+        "stars": 0,
+        "forks": 0,
+        "language": "Vue",
+        "lastUpdate": "2025-10-21",
+        "topics": []
+      },
+      "liveUrl": "https://iruhernandez.com",
+      "features": [
+        "Dark/light theme toggling with system preference detection",
+        "Infinite carousel with mouse wheel and drag interactions",
+        "Responsive mobile-first design",
+        "Performance optimization with service worker readiness",
+        "Semantic HTML for SEO",
+        "Snap-to-center functionality",
+        "GitHub service integration for displaying real projects",
+        "Custom cursor",
+        "Stats animation"
+      ],
+      "lastUpdated": "2025-10-21"
+    },
+    {
+      "id": "three-portfolio",
+      "name": "Three.js Portfolio",
+      "shortDescription": "3D portfolio showcase with WebGL",
+      "fullDescription": "Portfolio created with Three.js and Vite. A 3D portfolio showcasing work using Three.js library for 3D graphics and visualizations in the browser.",
+      "thumbnail": "/projects/placeholder.jpg",
+      "images": [],
+      "type": "owned",
+      "category": "3d-graphics",
+      "featured": true,
+      "tags": [
+        "css3",
+        "html5",
+        "javascript",
+        "threejs"
+      ],
+      "techStack": [
+        "Three.js",
+        "Vite",
+        "JavaScript",
+        "HTML5",
+        "CSS3"
+      ],
+      "github": {
+        "url": "https://github.com/iru97/three-portfolio",
+        "stars": 2,
+        "forks": 0,
+        "language": "JavaScript",
+        "lastUpdate": "2024-06-18",
+        "topics": [
+          "css3",
+          "html5",
+          "javascript",
+          "threejs"
+        ]
+      },
+      "liveUrl": "https://iru97.github.io/three-portfolio/",
+      "features": [
+        "3D graphics and visualizations",
+        "Built with Three.js library",
+        "Fast build with Vite"
+      ],
+      "lastUpdated": "2024-06-18"
+    },
+    {
+      "id": "metricool",
+      "name": "Metricool",
+      "shortDescription": "All-in-one social media analytics and management platform trusted by 2M+ users",
+      "fullDescription": "Metricool is the definitive all-in-one tool for managing and analyzing social media presence across all major platforms. Trusted by over 2 million users worldwide, it provides comprehensive analytics, scheduling, and ad management capabilities for businesses, agencies, and content creators.",
+      "thumbnail": "/projects/placeholder.jpg",
+      "images": [],
+      "type": "collaborative",
+      "category": "saas",
+      "featured": false,
+      "tags": [],
+      "techStack": [
+        "Vue.js",
+        "TypeScript",
+        "Chart.js",
+        "Ionic",
+        "Capacitor",
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "Redis",
+        "WebSockets"
+      ],
+      "liveUrl": "https://app.metricool.com",
+      "features": [
+        "Unified analytics across 10+ social networks (Instagram, Facebook, TikTok, LinkedIn, Twitter, YouTube, Pinterest)",
+        "Advanced content scheduling with best time to post recommendations",
+        "AI-powered content assistant for caption generation",
+        "Unified inbox managing all social interactions in one place",
+        "Ad campaign management for Facebook, Instagram, Google, and TikTok",
+        "Custom white-label reports with automated generation",
+        "Competitor analysis and hashtag tracking",
+        "SmartLinks for bio link optimization",
+        "Team collaboration tools with role-based permissions",
+        "Real-time notifications and alerts"
+      ],
+      "role": "Senior Frontend Developer",
+      "contribution": "Led development of analytics dashboards, real-time data visualization, content scheduling system, and cross-platform mobile app. Optimized performance for handling millions of social media metrics daily.",
+      "teamSize": 12,
+      "duration": "2+ years",
+      "lastUpdated": "2025-11-18T18:41:01.198Z",
+      "achievements": [
+        "Part of frontend team that started with 3 developers and scaled to 12",
+        "Implemented real-time analytics processing 10M+ metrics daily",
+        "Reduced dashboard load time by 60% through optimization",
+        "Built responsive charts handling datasets with 100k+ data points"
+      ]
+    },
+    {
+      "id": "metricool-mobile",
+      "name": "Metricool Mobile App",
+      "shortDescription": "Cross-platform mobile app for social media analytics with 500k+ downloads",
+      "fullDescription": "Official Metricool mobile application providing full-featured social media analytics and management on iOS and Android. Built with cross-platform technologies to deliver native performance while maintaining a single codebase, serving over 500,000 active users.",
+      "thumbnail": "/projects/placeholder.jpg",
+      "images": [],
+      "type": "collaborative",
+      "category": "mobile",
+      "featured": false,
+      "tags": [],
+      "techStack": [
+        "Ionic 7",
+        "Capacitor",
+        "Vue.js 3",
+        "TypeScript",
+        "Chart.js",
+        "Native APIs",
+        "SQLite"
+      ],
+      "liveUrl": "https://metricool.com",
+      "features": [
+        "Complete analytics dashboard optimized for mobile",
+        "Post scheduling with image editor and preview",
+        "Push notifications for metric alerts and milestones",
+        "Offline mode with background synchronization",
+        "Native camera integration for content creation",
+        "Biometric authentication (Face ID, Touch ID)",
+        "Quick actions and widgets",
+        "Deep linking for seamless navigation",
+        "Share extension for instant posting",
+        "Dark mode support",
+        "Multi-account management"
+      ],
+      "role": "Lead Mobile Developer",
+      "contribution": "Architected and developed cross-platform mobile application from scratch using Ionic and Capacitor. Implemented offline-first architecture, real-time sync, push notifications system, and native device integrations for both iOS and Android platforms.",
+      "duration": "2+ years",
+      "additionalLinks": [
+        {
+          "label": "iOS App",
+          "url": "https://apps.apple.com/us/app/metricool/id1072510529",
+          "icon": "fab fa-apple"
+        },
+        {
+          "label": "Android App",
+          "url": "https://play.google.com/store/apps/details?id=com.ionicframework.metricool185346",
+          "icon": "fab fa-google-play"
+        }
+      ],
+      "lastUpdated": "2025-11-18T18:41:01.198Z",
+      "achievements": [
+        "500k+ combined downloads on iOS and Android",
+        "4.5+ star rating on both app stores",
+        "Reduced app size by 40% through optimization",
+        "Implemented offline-first with IndexedDB sync"
+      ]
+    },
+    {
+      "id": "myolab-self",
+      "name": "MyoLab Self",
+      "shortDescription": "Cutting-edge embodied AI platform creating personalized human digital twins",
+      "fullDescription": "MyoLab Self is a revolutionary embodied AI platform that creates personalized human digital twins with embodied intelligence. The platform accurately predicts an individual's physiology, cognition, and behavior to enable hyper-personalized experiences in health, search, and e-commerce. Building human-embodied intelligence to empower humans.",
+      "thumbnail": "/screenshots/myolab/main.png",
+      "images": [
+        {
+          "url": "/screenshots/myolab/main.png",
+          "alt": "myolab-self main screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 145353.png",
+          "alt": "myolab-self screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 145653.png",
+          "alt": "myolab-self screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 150434.png",
+          "alt": "myolab-self screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 150527.png",
+          "alt": "myolab-self screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "collaborative",
+      "category": "ai-platform",
+      "featured": false,
+      "tags": [],
+      "techStack": [
+        "Vue 3",
+        "TypeScript",
+        "Three.js",
+        "TresJS",
+        "MediaPipe Pose",
+        "FFmpeg",
+        "Chart.js",
+        "Firebase",
+        "Ant Design Icons",
+        "FontAwesome",
+        "Sentry",
+        "Tailwind CSS",
+        "Markdown-it",
+        "Pinia"
+      ],
+      "liveUrl": "https://self.myolab.ai",
+      "features": [
+        "Real-time 3D embodied avatars with musculoskeletal models",
+        "Interactive emotional and physical expression systems",
+        "Personalized digital twin creation and customization",
+        "Human-like AI interactions with natural language processing",
+        "Predictive health and behavior modeling",
+        "WebGL-powered real-time rendering",
+        "Responsive avatar controls and manipulation",
+        "Cross-device compatibility",
+        "Privacy-first data handling",
+        "Integration with AI/ML prediction models"
+      ],
+      "role": "Senior Frontend Engineer (Contractor)",
+      "contribution": "Architected and built the entire frontend application for MyoLab's embodied AI platform. Implemented real-time 3D avatar rendering, emotional expression systems, and complex WebGL visualizations. Collaborated directly with AI/ML team to integrate embodied intelligence models into interactive user experiences.",
+      "duration": "1 year",
+      "lastUpdated": "2025-11-18T18:41:01.199Z",
+      "achievements": [
+        "Built 3D rendering engine handling complex skeletal animations",
+        "Implemented real-time expression system with 60fps performance",
+        "Optimized WebGL shaders reducing GPU load by 45%",
+        "Created reusable 3D component library"
+      ]
+    },
+    {
+      "id": "myolab-demo",
+      "name": "MyoLab Demo",
+      "shortDescription": "Interactive showcase demonstrating embodied AI capabilities and use cases",
+      "fullDescription": "Interactive demonstration platform showcasing MyoLab's embodied AI technology and its practical applications. Features live demos of digital twin creation, predictive modeling, and personalized AI interactions across various use cases including health optimization, movement analysis, and cognitive behavioral predictions.",
+      "thumbnail": "/screenshots/myolab/main.png",
+      "images": [
+        {
+          "url": "/screenshots/myolab/main.png",
+          "alt": "myolab-demo main screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 145353.png",
+          "alt": "myolab-demo screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 145653.png",
+          "alt": "myolab-demo screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 150434.png",
+          "alt": "myolab-demo screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/myolab/Screenshot 2025-11-18 150527.png",
+          "alt": "myolab-demo screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "collaborative",
+      "category": "ai-platform",
+      "featured": false,
+      "tags": [],
+      "techStack": [
+        "Vue 3",
+        "TypeScript",
+        "Three.js",
+        "TresJS",
+        "MediaPipe Pose",
+        "FFmpeg",
+        "Chart.js",
+        "Firebase",
+        "Tailwind CSS",
+        "Pinia"
+      ],
+      "liveUrl": "https://demo.myolab.ai",
+      "features": [
+        "Interactive embodied AI demonstrations",
+        "Live digital twin creation showcase",
+        "Real-time prediction visualizations",
+        "Use case scenario walkthroughs",
+        "Interactive 3D model exploration",
+        "Performance metrics visualization",
+        "Side-by-side comparison tools",
+        "Educational content and explanations"
+      ],
+      "role": "Frontend Engineer (Contractor)",
+      "contribution": "Developed interactive demo experiences showcasing MyoLab's embodied AI technology. Created engaging visualizations and interactive scenarios demonstrating real-world applications of human digital twins in healthcare, fitness, and personalized recommendations.",
+      "duration": "6 months",
+      "lastUpdated": "2025-11-18T18:41:01.199Z"
+    },
+    {
+      "id": "kinephy-canvas",
+      "name": "Kinephy Canvas",
+      "shortDescription": "AI-powered animation creation platform with intelligent motion generation",
+      "fullDescription": "Kinephy Canvas is an innovative AI-powered animation platform that combines traditional animation tools with cutting-edge AI motion generation. The platform enables creators to generate, edit, and refine animations using intelligent assistance, making professional-quality animation accessible to both experts and beginners.",
+      "thumbnail": "/screenshots/kinephy/main.png",
+      "images": [
+        {
+          "url": "/screenshots/kinephy/main.png",
+          "alt": "kinephy-canvas main screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/kinephy/Screenshot 2025-11-18 144954.png",
+          "alt": "kinephy-canvas screenshot",
+          "type": "screenshot"
+        },
+        {
+          "url": "/screenshots/kinephy/Screenshot 2025-11-18 145155.png",
+          "alt": "kinephy-canvas screenshot",
+          "type": "screenshot"
+        }
+      ],
+      "type": "collaborative",
+      "category": "ai-platform",
+      "featured": false,
+      "tags": [],
+      "techStack": [
+        "Vue 3",
+        "TypeScript",
+        "Three.js",
+        "TresJS",
+        "Stripe",
+        "Firebase",
+        "FFmpeg",
+        "Tailwind CSS 4",
+        "Axios",
+        "Pinia",
+        "Vite"
+      ],
+      "liveUrl": "https://canvas.kinephy.ai",
+      "features": [
+        "AI-powered motion generation and retargeting",
+        "Real-time canvas-based animation editor",
+        "Timeline editing with frame-level control",
+        "Intelligent keyframe suggestions",
+        "Motion library with AI categorization",
+        "Character rigging tools",
+        "Export to multiple animation formats",
+        "Collaborative editing support",
+        "Preset animation templates",
+        "Physics-based motion simulation"
+      ],
+      "role": "Frontend Developer",
+      "contribution": "Developed the canvas-based animation editor and AI tooling interface. Implemented real-time rendering system, timeline editor, and integration with AI motion generation models. Built intuitive controls for AI-assisted animation creation.",
+      "duration": "8 months",
+      "lastUpdated": "2025-11-18T18:41:01.199Z",
+      "achievements": [
+        "Built high-performance canvas rendering at 60fps",
+        "Implemented undo/redo system with efficient state management",
+        "Integrated AI models for real-time motion prediction"
+      ]
+    },
+    {
+      "id": "ai-assistant",
+      "name": "AI Assistant",
+      "shortDescription": "React Native AI-powered mobile assistant",
+      "fullDescription": "README not accessible or not present in the repository.",
+      "thumbnail": "/projects/placeholder.jpg",
+      "images": [],
+      "type": "owned",
+      "category": "mobile",
+      "featured": false,
+      "tags": [
+        "expo",
+        "react",
+        "react-native",
+        "styled-components",
+        "supabase-js",
+        "typescript"
+      ],
+      "techStack": [
+        "TypeScript",
+        "React Native",
+        "Expo",
+        "Supabase",
+        "Styled Components"
+      ],
+      "github": {
+        "url": "https://github.com/iru97/ai-assistant",
+        "stars": 0,
+        "forks": 0,
+        "language": "TypeScript",
+        "lastUpdate": "2025-02-09",
+        "topics": [
+          "expo",
+          "react",
+          "react-native",
+          "styled-components",
+          "supabase-js",
+          "typescript"
+        ]
+      },
+      "features": [],
+      "lastUpdated": "2025-02-09"
+    },
+    {
+      "id": "nuxtpokeapp",
+      "name": "Nuxt Pokemon App",
+      "shortDescription": "Pokemon application built with Nuxt 3",
+      "fullDescription": "Nuxt 3 Minimal Starter project. A Pokemon application built with Nuxt 3 using the PokeAPI. Standard setup with npm/pnpm/yarn, development server on localhost:3000, and production build instructions.",
+      "thumbnail": "/projects/placeholder.jpg",
+      "images": [],
+      "type": "owned",
+      "category": "web-app",
+      "featured": false,
+      "tags": [
+        "nuxt",
+        "nuxt3",
+        "typescript"
+      ],
+      "techStack": [
+        "Nuxt 3",
+        "Vue",
+        "TypeScript",
+        "PokeAPI"
+      ],
+      "github": {
+        "url": "https://github.com/iru97/nuxtpokeapp",
+        "stars": 2,
+        "forks": 0,
+        "language": "Vue",
+        "lastUpdate": "2024-06-18",
+        "topics": [
+          "nuxt",
+          "nuxt3",
+          "typescript"
+        ]
+      },
+      "features": [
+        "Pokemon data from PokeAPI",
+        "Built with Nuxt 3 framework"
+      ],
+      "lastUpdated": "2024-06-18"
+    }
+  ]
+}

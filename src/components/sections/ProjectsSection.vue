@@ -5,8 +5,7 @@
         <div class="projects-header-content">
           <h2 class="section-title">Projects</h2>
           <p class="section-description">
-            My projects reflect my passion for clean code, modern tech, and
-            growth.
+            A showcase of my work across web applications, 3D graphics, data visualization, and professional collaborations.
           </p>
         </div>
         <a
@@ -15,9 +14,10 @@
           class="view-all-link"
         >
           <i class="fab fa-github"></i>
-          <span>View all</span>
+          <span>View all on GitHub</span>
         </a>
       </div>
+
       <div
         class="projects-carousel"
         ref="carousel"
@@ -28,140 +28,192 @@
       >
         <div
           v-for="(project, index) in infiniteProjects"
-          :key="`${project.name}-${index}`"
+          :key="`${project.id}-${index}`"
           class="project-card"
-          :class="{ 'is-center': index === centerIndex }"
+          :class="{
+            'is-center': index === centerIndex,
+            [`card-${project.type}`]: true
+          }"
+          @click="openProject(project)"
         >
-          <div class="project-image">
-            <div class="project-placeholder">
-              <i :class="project.icon"></i>
+          <!-- Project Image with Overlay -->
+          <div class="project-image" :class="{ 'no-image': !hasValidThumbnail(project) }">
+            <!-- Logo overlay (top right) -->
+            <div v-if="project.logo" class="project-logo">
+              <img :src="project.logo" :alt="`${project.name} logo`" />
+            </div>
+
+            <img
+              v-if="hasValidThumbnail(project)"
+              :src="project.thumbnail"
+              :alt="`${project.name} preview`"
+              class="project-thumbnail"
+              @error="handleImageError"
+              loading="lazy"
+            />
+            <div v-else class="no-image-placeholder">
+              <i class="fas fa-image"></i>
+              <span>No preview available</span>
+            </div>
+            <div v-if="hasValidThumbnail(project)" class="image-overlay">
+              <div class="overlay-content">
+                <i class="fas fa-search-plus overlay-icon"></i>
+                <span class="overlay-text">View Details</span>
+              </div>
+            </div>
+
+            <!-- Badge Indicators -->
+            <div class="project-badges">
+              <!-- Project Type Badge -->
+              <span v-if="project.type === 'owned'" class="badge badge-personal">
+                <i class="fas fa-user"></i>
+                Personal
+              </span>
+              <span v-else class="badge badge-professional">
+                <i class="fas fa-briefcase"></i>
+                Professional
+              </span>
+              <!-- Live Status Badge -->
+              <span v-if="project.liveUrl" class="badge badge-live">
+                <i class="fas fa-globe"></i>
+                Live
+              </span>
             </div>
           </div>
+
+          <!-- Project Content -->
           <div class="project-content">
             <div class="project-header">
               <h3>{{ project.name }}</h3>
-              <div class="project-links">
+              <div class="project-links" @click.stop>
                 <a
                   v-if="project.github"
-                  :href="project.github"
+                  :href="project.github.url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  @click.stop
+                  class="link-icon"
+                  title="View on GitHub"
                 >
                   <i class="fab fa-github"></i>
                 </a>
                 <a
-                  v-if="project.live"
-                  :href="project.live"
+                  v-if="project.liveUrl"
+                  :href="project.liveUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  @click.stop
+                  class="link-icon"
+                  title="Visit live site"
                 >
                   <i class="fas fa-external-link-alt"></i>
                 </a>
               </div>
             </div>
-            <p>{{ project.description }}</p>
-            <div class="tags">
-              <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+
+            <p class="project-description">{{ project.shortDescription }}</p>
+
+            <!-- Tech Stack Preview -->
+            <div class="tech-preview">
+              <span
+                v-for="(tech, i) in project.techStack.slice(0, 3)"
+                :key="i"
+                class="tech-tag"
+              >
+                {{ tech }}
+              </span>
+              <span v-if="project.techStack.length > 3" class="tech-more">
+                +{{ project.techStack.length - 3 }}
+              </span>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Project Categories Filter (optional enhancement) -->
+      <div class="projects-footer">
+        <div class="project-count">
+          Showing {{ allProjects.length }} projects
+        </div>
+      </div>
     </div>
+
+    <!-- Project Modal -->
+    <ProjectModal
+      :project="selectedProject"
+      :allProjects="allProjects"
+      @close="closeProject"
+      @navigate="navigateToProject"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from 'vue';
+import { useProjects } from '../../composables/useProjects';
+import { useProjectNavigation } from '../../composables/useProjectNavigation';
+import ProjectModal from '../ProjectModal.vue';
+import type { Project } from '../../types/project';
+
+const { allProjects, mixedProjects } = useProjects();
+const { activeProject, closeProjectModal } = useProjectNavigation();
 
 const carousel = ref<HTMLElement | null>(null);
 const centerIndex = ref(0);
 const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
+const selectedProject = ref<Project | null>(null);
 
-const projects = ref([
-  {
-    name: "Lab - Experimental Projects",
-    description:
-      "Personal laboratory for testing new technologies, prototypes, and experimental features.",
-    tags: ["Vue 3", "TypeScript", "Vite"],
-    icon: "fas fa-flask",
-    live: "https://lab.iruhernandez.com",
-  },
-  {
-    name: "Advanced TypeScript Examples",
-    description:
-      "Collection of advanced TypeScript patterns and type-system features for production apps.",
-    tags: ["TypeScript", "JavaScript"],
-    icon: "fas fa-code",
-    github: "https://github.com/iru97/advanced-typescript-examples",
-    githubTooltip: "View repository: advanced-typescript-examples",
-  },
-  {
-    name: "Datos en Abierto",
-    description:
-      "Vue 3 app transforming Spanish government data into accessible visualizations.",
-    tags: ["Vue 3", "TypeScript", "APIs"],
-    icon: "fas fa-database",
-    github: "https://github.com/iru97/datosenabierto.es",
-    githubTooltip: "View repository: datosenabierto.es",
-    live: "https://datosenabiertos.es/",
-  },
-  {
-    name: "Three.js Portfolio",
-    description:
-      "3D portfolio showcase built with Three.js featuring interactive animations and WebGL effects.",
-    tags: ["Three.js", "WebGL", "JavaScript"],
-    icon: "fas fa-cube",
-    github: "https://github.com/iru97/three-portfolio",
-    githubTooltip: "View repository: three-portfolio",
-  },
-  {
-    name: "Vue Three.js Integration",
-    description:
-      "Vue components for Three.js integration with reactive bindings and scene management.",
-    tags: ["Vue", "Three.js", "Components"],
-    icon: "fas fa-cubes",
-    github: "https://github.com/iru97/vue-threejs",
-    githubTooltip: "View repository: vue-threejs",
-  },
-  {
-    name: "Nuxt Pokemon App",
-    description:
-      "Server-side rendered Pokemon application built with Nuxt.js and external APIs.",
-    tags: ["Nuxt", "Vue", "SSR"],
-    icon: "fas fa-gamepad",
-    github: "https://github.com/iru97/nuxtpokeapp",
-    githubTooltip: "View repository: nuxtpokeapp",
-  },
-]);
+// Sync global project navigation with local modal state
+watch(activeProject, (newProject) => {
+  if (newProject) {
+    selectedProject.value = newProject;
+  }
+});
 
 // Crear array infinito repitiendo los proyectos 5 veces para efecto loop
 const infiniteProjects = computed(() => {
   return [
-    ...projects.value,
-    ...projects.value,
-    ...projects.value,
-    ...projects.value,
-    ...projects.value,
+    ...mixedProjects.value,
+    ...mixedProjects.value,
+    ...mixedProjects.value,
+    ...mixedProjects.value,
+    ...mixedProjects.value,
   ];
 });
 
-// Manejar scroll con rueda del mouse (convertir vertical a horizontal)
-const handleWheel = (event: WheelEvent) => {
-  if (!carousel.value) return;
+// Modal handlers
+function openProject(project: Project) {
+  // Find the original project (not the repeated one)
+  const originalProject = allProjects.value.find((p) => p.id === project.id);
+  selectedProject.value = originalProject || null;
+}
 
-  // Usar deltaY para scroll vertical y deltaX para scroll horizontal (trackpad)
-  const delta =
-    Math.abs(event.deltaY) > Math.abs(event.deltaX)
-      ? event.deltaY
-      : event.deltaX;
+function closeProject() {
+  selectedProject.value = null;
+  closeProjectModal();
+}
 
-  // Aplicar scroll horizontal
-  carousel.value.scrollLeft += delta;
-};
+function navigateToProject(projectId: string) {
+  const project = allProjects.value.find((p) => p.id === projectId);
+  selectedProject.value = project || null;
+}
+
+// Check if project has valid thumbnail (not placeholder or missing)
+function hasValidThumbnail(project: Project): boolean {
+  return !!project.thumbnail && !project.thumbnail.includes('placeholder');
+}
+
+// Image error handler
+function handleImageError(event: Event) {
+  const img = event.target as HTMLImageElement;
+  // Hide image if it fails to load (don't show broken placeholder)
+  img.style.display = 'none';
+  const parent = img.parentElement;
+  if (parent && parent.classList.contains('project-image')) {
+    // Keep the container but with minimal styling
+    parent.style.background = '#f0f0f0';
+  }
+}
 
 // Funcionalidad de arrastre (drag)
 const startDrag = (event: MouseEvent) => {
@@ -169,7 +221,7 @@ const startDrag = (event: MouseEvent) => {
   isDragging.value = true;
   startX.value = event.pageX - carousel.value.offsetLeft;
   scrollLeft.value = carousel.value.scrollLeft;
-  carousel.value.style.scrollBehavior = "auto";
+  carousel.value.style.scrollBehavior = 'auto';
 };
 
 const drag = (event: MouseEvent) => {
@@ -183,7 +235,7 @@ const drag = (event: MouseEvent) => {
 const endDrag = () => {
   if (carousel.value) {
     isDragging.value = false;
-    carousel.value.style.scrollBehavior = "smooth";
+    carousel.value.style.scrollBehavior = 'smooth';
   }
 };
 
@@ -191,9 +243,9 @@ const endDrag = () => {
 onMounted(() => {
   if (carousel.value) {
     const cardWidth =
-      carousel.value.querySelector(".project-card")?.clientWidth || 0;
+      carousel.value.querySelector('.project-card')?.clientWidth || 0;
     const gap = 24; // 1.5rem = 24px
-    const singleSetWidth = (cardWidth + gap) * projects.value.length;
+    const singleSetWidth = (cardWidth + gap) * mixedProjects.value.length;
     const startPosition = singleSetWidth * 2; // Empezar en el tercer set (índice 2)
 
     setTimeout(() => {
@@ -216,7 +268,7 @@ onMounted(() => {
       // Si estás en el primer set (cerca del inicio absoluto)
       if (currentScroll < singleSetWidth) {
         isResetting = true;
-        carousel.value.style.scrollBehavior = "auto";
+        carousel.value.style.scrollBehavior = 'auto';
         carousel.value.scrollLeft = currentScroll + singleSetWidth * 2;
         setTimeout(() => {
           isResetting = false;
@@ -225,7 +277,7 @@ onMounted(() => {
       // Si estás en el último set (cerca del final absoluto)
       else if (currentScroll > singleSetWidth * 3) {
         isResetting = true;
-        carousel.value.style.scrollBehavior = "auto";
+        carousel.value.style.scrollBehavior = 'auto';
         carousel.value.scrollLeft = currentScroll - singleSetWidth * 2;
         setTimeout(() => {
           isResetting = false;
@@ -233,12 +285,12 @@ onMounted(() => {
       }
     };
 
-    carousel.value.addEventListener("scroll", () => {
+    carousel.value.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = window.setTimeout(handleInfiniteScroll, 50);
     });
 
-    // Agregar listener del wheel con mejor compatibilidad para Chrome
+    // Agregar listener del wheel con mejor compatibilidad
     const wheelHandler = (e: WheelEvent) => {
       if (!carousel.value) return;
 
@@ -250,12 +302,12 @@ onMounted(() => {
         // Aplicar scroll horizontal suave
         carousel.value.scrollBy({
           left: e.deltaY,
-          behavior: "auto",
+          behavior: 'auto',
         });
       }
     };
 
-    carousel.value.addEventListener("wheel", wheelHandler, { passive: false });
+    carousel.value.addEventListener('wheel', wheelHandler, { passive: false });
   }
 });
 </script>
@@ -265,7 +317,7 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   gap: 2rem;
 }
 
@@ -307,12 +359,7 @@ onMounted(() => {
   background-color: var(--primary);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.view-all-link:hover span,
-.view-all-link:hover i {
-  color: white;
+  box-shadow: 0 4px 12px rgba(25, 114, 120, 0.3);
 }
 
 .projects-carousel {
@@ -329,8 +376,8 @@ onMounted(() => {
   padding-right: calc(50vw - 50%);
   cursor: grab;
   user-select: none;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .projects-carousel:active {
@@ -338,114 +385,358 @@ onMounted(() => {
   scroll-snap-type: none;
 }
 
-/* Ocultar scrollbar completamente */
 .projects-carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
+/* Project Card */
 .project-card {
   flex: 0 0 420px;
   width: 420px;
   min-width: 420px;
   max-width: 420px;
-  height: 300px;
+  height: 395px; /* Altura aumentada para acomodar tech badges en 2 líneas */
   scroll-snap-align: center;
-  transition: all 0.3s ease;
-  opacity: 0.6;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.7;
   transform: scale(0.92);
   display: flex;
   flex-direction: column;
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
 }
 
-.project-card * {
-  pointer-events: auto;
+/* Different styles for project types */
+.project-card.card-owned {
+  border: 4px solid transparent;
+  border-top-color: transparent;
+}
+
+.project-card.card-collaborative {
+  border: 4px solid rgba(196, 69, 54, 0.4);
+}
+
+.project-card.card-owned:hover,
+.project-card.card-owned.is-center {
+  border-color: var(--primary);
+}
+
+.project-card.card-collaborative:hover,
+.project-card.card-collaborative.is-center {
+  border-color: var(--accent);
 }
 
 .project-card.is-center,
 .project-card:hover {
   opacity: 1;
   transform: scale(1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Forzar tamaño consistente en la imagen */
-.project-card .project-image {
+/* Project Image */
+.project-image {
+  position: relative;
   width: 100%;
-  height: 140px;
+  height: 180px;
   flex-shrink: 0;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.project-card .project-placeholder {
-  width: 100%;
-  height: 100%;
+.dark-theme .project-image {
+  background: #1a1a1a;
+}
+
+.project-image.no-image {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Contenido con altura fija */
-.project-card .project-content {
+.no-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.no-image-placeholder i {
+  font-size: 3rem;
+}
+
+.no-image-placeholder span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Project Logo (top right corner) */
+.project-logo {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 10px;
+  padding: 0.6rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark-theme .project-logo {
+  background: rgba(20, 20, 20, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.project-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-thumbnail {
+  transform: scale(1.05);
+}
+
+/* Image Overlay */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+  color: white;
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .overlay-content {
+  transform: translateY(0);
+}
+
+.overlay-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.overlay-text {
+  display: block;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Badges */
+.project-badges {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.badge-personal {
+  background-color: rgba(25, 114, 120, 0.95);
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.badge-professional {
+  background-color: rgba(196, 69, 54, 0.95);
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.badge-live {
+  background-color: #10b981;
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+/* Content */
+.project-content {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 1.4rem 1.6rem;
-  gap: 0.85rem;
-  overflow: hidden;
+  padding: 1rem;
+  gap: 0.75rem;
 }
 
-.project-card .project-header {
+.project-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1.3rem;
+  gap: 1rem;
 }
 
-.project-card .project-content h3 {
+.project-header h3 {
   margin: 0;
-  font-size: 1.45rem;
-  line-height: 1.4;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  flex: 1;
 }
 
-.project-card .project-content p {
-  margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  flex: 0 0 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.project-card .tags {
+.project-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  align-content: flex-start;
-  flex: 0 0 auto;
-  margin-top: auto;
-}
-
-.project-card .tags span {
-  font-size: 0.95rem;
-  padding: 0.45rem 0.9rem;
-  white-space: nowrap;
-}
-
-.project-card .project-links {
-  display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-shrink: 0;
 }
 
-.project-card .project-links a {
-  font-size: 1.35rem;
+.link-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.link-icon:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.project-description {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  flex: 0 0 auto;
+}
+
+/* Tech Preview */
+.tech-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tech-tag {
+  padding: 0.4rem 0.8rem;
+  background-color: #e0f2f1;
+  color: #00695c;
+  border: 1.5px solid #00897b;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.dark-theme .tech-tag {
+  background-color: rgba(0, 150, 136, 0.15);
+  color: #4db6ac;
+  border-color: #00897b;
+}
+
+.tech-more {
+  padding: 0.4rem 0.8rem;
+  background-color: #f5f5f5;
+  color: #616161;
+  border: 1.5px solid #9e9e9e;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.dark-theme .tech-more {
+  background-color: rgba(158, 158, 158, 0.15);
+  color: #bdbdbd;
+  border-color: #757575;
+}
+
+/* Footer */
+.projects-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.project-count {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 /* Responsive */
@@ -455,11 +746,11 @@ onMounted(() => {
     width: 380px;
     min-width: 380px;
     max-width: 380px;
-    height: 290px;
+    height: 385px;
   }
 
-  .project-card .project-image {
-    height: 130px;
+  .project-image {
+    height: 160px;
   }
 }
 
@@ -494,30 +785,43 @@ onMounted(() => {
     width: 300px;
     min-width: 300px;
     max-width: 300px;
-    height: 310px;
+    height: 375px;
   }
 
-  .project-card .project-image {
-    height: 110px;
+  .project-image {
+    height: 140px;
   }
 
-  .project-card .project-content {
-    padding: 0.8rem 0.9rem;
-    gap: 0.55rem;
+  .project-logo {
+    width: 40px;
+    height: 40px;
+    padding: 0.35rem;
   }
 
-  .project-card .project-content h3 {
-    font-size: 1rem;
+  .project-logo {
+    width: 40px;
+    height: 40px;
+    padding: 0.35rem;
   }
 
-  .project-card .project-content p {
-    font-size: 0.8rem;
+  .project-content {
+    padding: 0.85rem;
+    gap: 0.5rem;
   }
 
-  .project-card .tags span {
-    font-size: 0.65rem;
-    padding: 0.25rem 0.5rem;
+  .project-header h3 {
+    font-size: 1.15rem;
+  }
+
+  .project-description {
+    font-size: 0.85rem;
+  }
+
+  .tech-tag,
+  .tech-more {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    font-weight: 700;
   }
 }
 </style>
-
