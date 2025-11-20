@@ -1058,6 +1058,23 @@ section {
   font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 0.75rem;
+  display: block;
+}
+
+.company-link {
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: block;
+}
+
+.company-link:hover {
+  color: var(--primary);
+}
+
+.company-link i {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
 }
 
 .timeline-date {
