@@ -1,13 +1,7 @@
 <template>
   <div id="app">
-    <!-- Mesh Gradient Background -->
-    <MeshGradientBackground
-      ref="meshGradientRef"
-      :isDark="isDark"
-      :enableScroll="true"
-      @ready="onGradientReady"
-      @error="onGradientError"
-    />
+    <!-- 3D Background with Physics -->
+    <ThreeBackground :isDark="isDark" />
 
     <!-- Header / Toolbar -->
     <header>
@@ -85,40 +79,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted } from "vue";
 import HeroSection from "./components/sections/HeroSection.vue";
 import ProjectsSection from "./components/sections/ProjectsSection.vue";
 import ExperienceSection from "./components/sections/ExperienceSection.vue";
 import SkillsSection from "./components/sections/SkillsSection.vue";
 import ArticlesSection from "./components/sections/ArticlesSection.vue";
 import ContactSection from "./components/sections/ContactSection.vue";
-import MeshGradientBackground from "./components/background/MeshGradientBackground.vue";
+import ThreeBackground from "./components/3d/ThreeBackground.vue";
 import { useCustomCursor } from "./composables/useCustomCursor";
 
 const isDark = ref(false);
-const meshGradientRef = ref<InstanceType<typeof MeshGradientBackground> | null>(null);
 
 const toggleTheme = () => {
   isDark.value = !isDark.value;
   document.body.classList.toggle("dark-theme");
   localStorage.setItem("theme", isDark.value ? "dark" : "light");
-};
-
-// Gradient event handlers
-const onGradientReady = () => {
-  console.log('✨ Mesh gradient initialized successfully');
-};
-
-const onGradientError = (error: Error) => {
-  console.error('❌ Mesh gradient error:', error);
-};
-
-// Scroll handler para parallax effect
-const handleScroll = () => {
-  const scrollY = window.scrollY;
-  if (meshGradientRef.value) {
-    meshGradientRef.value.updateScroll(scrollY);
-  }
 };
 
 // Initialize custom cursor
@@ -133,13 +109,5 @@ onMounted(() => {
     isDark.value = true;
     document.body.classList.add("dark-theme");
   }
-
-  // Add scroll listener for gradient parallax
-  window.addEventListener('scroll', handleScroll, { passive: true });
-});
-
-onUnmounted(() => {
-  // Remove scroll listener
-  window.removeEventListener('scroll', handleScroll);
 });
 </script>

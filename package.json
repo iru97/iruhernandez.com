@@ -11,7 +11,10 @@
     "fetch-projects": "tsx scripts/fetch-project-data.ts"
   },
   "dependencies": {
-    "@tresjs/core": "^3.4.0",
+    "@dimforge/rapier3d": "^0.19.3",
+    "@tresjs/cientos": "^5.1.1",
+    "@tresjs/core": "^5.1.1",
+    "gsap": "^3.13.0",
     "pinia": "^2.1.6",
     "three": "^0.155.0",
     "vue": "^3.3.4",
@@ -26,6 +29,8 @@
     "tsx": "^4.20.6",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-top-level-await": "^1.6.0",
+    "vite-plugin-wasm": "^3.5.0",
     "vue-tsc": "^1.8.5"
   }
 }
