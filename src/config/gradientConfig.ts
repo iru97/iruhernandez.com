@@ -52,33 +52,33 @@ export interface PerlinNoiseConfig {
  * Configuración principal del gradiente mesh
  */
 export const gradientConfig: GradientConfig = {
-  // Tema claro: colores sutiles para mantener legibilidad
+  // Tema claro: transición ULTRA sutil solo entre tonos muy cercanos
   light: {
-    color1: '#ffffff',    // Base blanca
-    color2: '#edddd4',    // Champagne Pink (bg-secondary)
-    color3: '#197278',    // Primary - aplicado con baja opacidad en shader
-    color4: '#c44536',    // Accent - aplicado con baja opacidad en shader
+    color1: '#ffffff',    // Base blanca pura
+    color2: '#faf8f6',    // Casi blanco con tinte cálido
+    color3: '#f5f2ef',    // Champagne muy claro (casi imperceptible)
+    color4: '#f0ebe8',    // Champagne más claro aún
   },
 
-  // Tema oscuro: más contraste pero manteniendo profesionalismo
+  // Tema oscuro: transición sutil entre tonos oscuros
   dark: {
-    color1: '#1c2a28',    // Dark base (bg-primary dark)
-    color2: '#152220',    // Darker base (bg-secondary dark)
-    color3: '#197278',    // Primary - opacidad media en shader
-    color4: '#c44536',    // Accent - opacidad media en shader
+    color1: '#1c2a28',    // Dark base principal
+    color2: '#192523',    // Ligeramente más oscuro
+    color3: '#1a2726',    // Variación muy sutil
+    color4: '#1b2827',    // Variación mínima
   },
 
-  // Configuración de animación
+  // Configuración de animación - EXTREMADAMENTE SUTIL
   animation: {
-    speed: 0.0003,        // Velocidad muy lenta para efecto sutil (0.0003 = ~3.3 min por ciclo)
+    speed: 0.0001,        // Casi estático (10 min por ciclo)
     density: 0.15,        // Densidad del mesh (0-1)
-    amplitude: 260,       // Amplitud de deformación de vértices (px)
+    amplitude: 80,        // Deformación MUY reducida (antes 260)
   },
 
   // Configuración de scroll
   scroll: {
-    parallaxFactor: 0.25, // 25% de la velocidad del scroll (efecto parallax sutil)
-    enabled: true,        // Activar/desactivar efecto scroll
+    parallaxFactor: 0.1,  // Parallax muy reducido (antes 0.25)
+    enabled: true,
   },
 };
 
@@ -161,15 +161,15 @@ export const colorUtils = {
 export const performanceConfig = {
   // Reducir calidad en móviles
   mobile: {
-    meshSegments: 32,     // Menos segmentos en mobile (vs 64 en desktop)
-    amplitude: 180,       // Menor amplitud
-    pauseWhenHidden: true, // Pausar cuando tab no es visible
+    meshSegments: 32,     // Menos segmentos en mobile
+    amplitude: 50,        // Deformación muy sutil
+    pauseWhenHidden: true,
   },
 
-  // Desktop full quality
+  // Desktop - efecto sutil y elegante
   desktop: {
-    meshSegments: 64,     // Alta densidad
-    amplitude: 260,       // Amplitud completa
+    meshSegments: 64,     // Alta densidad para suavidad
+    amplitude: 80,        // Deformación muy reducida
     pauseWhenHidden: true,
   },
 

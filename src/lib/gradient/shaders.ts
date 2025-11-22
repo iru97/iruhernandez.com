@@ -173,25 +173,29 @@ varying float v_noise;
 void main() {
   vec2 uv = v_texCoord;
 
-  // Mezclar color1 y color2 basado en posición horizontal
-  vec3 color = mix(u_color1, u_color2, uv.x);
+  // Usar smoothstep para transiciones ultra suaves
+  float xGradient = smoothstep(0.0, 1.0, uv.x);
+  float yGradient = smoothstep(0.0, 1.0, uv.y);
 
-  // Mezclar con color3 basado en posición vertical
-  color = mix(color, u_color3, uv.y * 0.7);
+  // Mezclar color1 y color2 EXTREMADAMENTE sutil
+  vec3 color = mix(u_color1, u_color2, xGradient * 0.4);
 
-  // Añadir variación temporal con color4
+  // Mezclar con color3 muy sutilmente basado en posición vertical
+  color = mix(color, u_color3, yGradient * 0.25);
+
+  // Añadir variación temporal casi imperceptible
   float timeVariation = sin(u_time * 0.2) * 0.5 + 0.5;
-  color = mix(color, u_color4, timeVariation * 0.15);
+  color = mix(color, u_color4, timeVariation * 0.04);
 
-  // Usar noise para agregar textura muy sutil
-  float noiseInfluence = v_noise * 0.05;
+  // Usar noise para agregar textura mínima
+  float noiseInfluence = v_noise * 0.015;
   color = mix(color, u_color3, noiseInfluence);
 
-  // Agregar gradiente radial desde el centro para más profundidad
+  // Agregar gradiente radial muy muy sutil
   vec2 center = vec2(0.5, 0.5);
   float distanceFromCenter = distance(uv, center);
   float radialGradient = smoothstep(0.0, 1.4, distanceFromCenter);
-  color = mix(color, u_color4, radialGradient * 0.1);
+  color = mix(color, u_color4, radialGradient * 0.025);
 
   // Output final con alpha
   gl_FragColor = vec4(color, u_alpha);
