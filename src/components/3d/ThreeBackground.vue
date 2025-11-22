@@ -1,75 +1,19 @@
 <template>
   <div class="three-background">
-    <TresCanvas
-      v-bind="canvasProps"
-      :clear-color="clearColor"
-      window-size
-    >
-      <!-- Cámara -->
-      <TresPerspectiveCamera
-        :position="cameraPosition"
-        :fov="cameraFov"
-        :look-at="[0, 0, 0]"
-      />
-
-      <!-- Luces -->
-      <TresAmbientLight
-        :color="lights.ambient.color"
-        :intensity="lights.ambient.intensity"
-      />
-
-      <TresDirectionalLight
-        :color="lights.directional.color"
-        :intensity="lights.directional.intensity"
-        :position="lights.directional.position"
-      />
-
-      <TresPointLight
-        :color="lights.point.color"
-        :intensity="lights.point.intensity"
-        :position="lights.point.position"
-      />
-
-      <!-- Geometrías -->
-      <TresGroup ref="geometriesGroupRef">
-        <TresMesh
-          v-for="(geo, index) in activeGeometries"
-          :key="`geometry-${index}`"
-          :ref="(el) => setMeshRef(el, index)"
-          :position="geo.position"
-          :scale="geo.scale"
-          :rotation="geo.rotation || [0, 0, 0]"
-        >
-          <!-- Geometría según tipo -->
-          <component
-            :is="getGeometryComponent(geo.type)"
-            v-bind="getGeometryProps(geo.type)"
-          />
-
-          <!-- Material -->
-          <TresMeshStandardMaterial
-            :color="geo.color"
-            :metalness="geo.metalness || 0.5"
-            :roughness="geo.roughness || 0.5"
-          />
-        </TresMesh>
-      </TresGroup>
-    </TresCanvas>
+    <canvas ref="canvasRef" class="three-canvas"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
-import { TresCanvas } from '@tresjs/core'
-import { useLoop } from '@tresjs/core'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import * as THREE from 'three'
 import { useThreePhysics } from '@/composables/useThreePhysics'
 import { useScrollPhysics } from '@/composables/useScrollPhysics'
 import {
   threeSceneConfig,
   getPerformanceConfig,
-  type GeometryType,
+  type GeometryConfig,
 } from '@/config/threeConfig'
-import type { Mesh } from 'three'
 
 /**
  * Props
@@ -83,51 +27,34 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 /**
- * Canvas props
+ * Referencias
  */
-const canvasProps = {
-  alpha: true,
-  antialias: true,
-  powerPreference: 'high-performance' as const,
-}
+const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 /**
- * Color de fondo (transparente)
+ * Three.js core
  */
-const clearColor = computed(() =>
-  props.isDark ? '#0a0a0a' : '#ffffff'
-)
+let scene: THREE.Scene | null = null
+let camera: THREE.PerspectiveCamera | null = null
+let renderer: THREE.WebGLRenderer | null = null
+let animationFrameId: number | null = null
 
 /**
- * Configuración de cámara
+ * Geometrías y meshes
  */
-const cameraPosition = computed(() => threeSceneConfig.camera.position.toArray())
-const cameraFov = computed(() => threeSceneConfig.camera.fov)
+const meshes: THREE.Mesh[] = []
 
 /**
- * Configuración de luces
+ * Luces
  */
-const lights = computed(() => threeSceneConfig.lights)
+let ambientLight: THREE.AmbientLight | null = null
+let directionalLight: THREE.DirectionalLight | null = null
+let pointLight: THREE.PointLight | null = null
 
 /**
- * Geometrías activas según performance
+ * Performance config
  */
 const performanceConfig = getPerformanceConfig()
-const activeGeometries = computed(() => {
-  return threeSceneConfig.geometries.slice(0, performanceConfig.geometryCount)
-})
-
-/**
- * Referencias a meshes
- */
-const meshes = ref<Mesh[]>([])
-const geometriesGroupRef = ref()
-
-function setMeshRef(el: any, index: number) {
-  if (el && el.value) {
-    meshes.value[index] = el.value as Mesh
-  }
-}
 
 /**
  * Composables
@@ -144,49 +71,127 @@ const {
 const {
   currentBehavior,
   scrollPercent,
-  getTransitionFactor,
 } = useScrollPhysics()
 
 /**
- * Obtener componente de geometría según tipo
+ * Clock para delta time
  */
-function getGeometryComponent(type: GeometryType) {
-  const components = {
-    box: 'TresBoxGeometry',
-    sphere: 'TresSphereGeometry',
-    torus: 'TresTorusGeometry',
-    cone: 'TresConeGeometry',
-    octahedron: 'TresOctahedronGeometry',
-  }
+const clock = new THREE.Clock()
 
-  return components[type] || 'TresBoxGeometry'
+/**
+ * Crear geometría según tipo
+ */
+function createGeometry(type: string): THREE.BufferGeometry {
+  switch (type) {
+    case 'box':
+      return new THREE.BoxGeometry(1, 1, 1)
+    case 'sphere':
+      return new THREE.SphereGeometry(1, 32, 32)
+    case 'torus':
+      return new THREE.TorusGeometry(1, 0.4, 16, 100)
+    case 'cone':
+      return new THREE.ConeGeometry(1, 2, 32)
+    case 'octahedron':
+      return new THREE.OctahedronGeometry(1, 0)
+    default:
+      return new THREE.BoxGeometry(1, 1, 1)
+  }
 }
 
 /**
- * Obtener props de geometría según tipo
+ * Crear mesh desde configuración
  */
-function getGeometryProps(type: GeometryType) {
-  const props: Record<string, any> = {}
+function createMesh(config: GeometryConfig): THREE.Mesh {
+  const geometry = createGeometry(config.type)
 
-  switch (type) {
-    case 'box':
-      props.args = [1, 1, 1]
-      break
-    case 'sphere':
-      props.args = [1, 32, 32]
-      break
-    case 'torus':
-      props.args = [1, 0.4, 16, 100]
-      break
-    case 'cone':
-      props.args = [1, 2, 32]
-      break
-    case 'octahedron':
-      props.args = [1, 0]
-      break
+  const material = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(config.color),
+    metalness: config.metalness || 0.5,
+    roughness: config.roughness || 0.5,
+  })
+
+  const mesh = new THREE.Mesh(geometry, material)
+
+  // Posición
+  mesh.position.set(...config.position)
+
+  // Escala
+  mesh.scale.setScalar(config.scale)
+
+  // Rotación inicial
+  if (config.rotation) {
+    mesh.rotation.set(...config.rotation)
   }
 
-  return props
+  return mesh
+}
+
+/**
+ * Inicializar escena Three.js
+ */
+function initThreeScene() {
+  if (!canvasRef.value) return
+
+  // Crear escena
+  scene = new THREE.Scene()
+  scene.background = null // Transparente
+
+  // Crear cámara
+  const aspect = window.innerWidth / window.innerHeight
+  camera = new THREE.PerspectiveCamera(
+    threeSceneConfig.camera.fov,
+    aspect,
+    0.1,
+    1000
+  )
+  camera.position.copy(threeSceneConfig.camera.position)
+  camera.lookAt(0, 0, 0)
+
+  // Crear renderer
+  renderer = new THREE.WebGLRenderer({
+    canvas: canvasRef.value,
+    alpha: true,
+    antialias: true,
+  })
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+  // Crear luces
+  const lightsConfig = threeSceneConfig.lights
+
+  ambientLight = new THREE.AmbientLight(
+    lightsConfig.ambient.color,
+    lightsConfig.ambient.intensity
+  )
+  scene.add(ambientLight)
+
+  directionalLight = new THREE.DirectionalLight(
+    lightsConfig.directional.color,
+    lightsConfig.directional.intensity
+  )
+  directionalLight.position.copy(lightsConfig.directional.position)
+  scene.add(directionalLight)
+
+  pointLight = new THREE.PointLight(
+    lightsConfig.point.color,
+    lightsConfig.point.intensity
+  )
+  pointLight.position.copy(lightsConfig.point.position)
+  scene.add(pointLight)
+
+  // Crear geometrías
+  const activeGeometries = threeSceneConfig.geometries.slice(
+    0,
+    performanceConfig.geometryCount
+  )
+
+  activeGeometries.forEach((config) => {
+    const mesh = createMesh(config)
+    scene!.add(mesh)
+    meshes.push(mesh)
+  })
+
+  console.log('✅ Three.js scene initialized')
 }
 
 /**
@@ -201,26 +206,21 @@ async function setupPhysics() {
   await initPhysics(threeSceneConfig.physics)
 
   // Crear rigid bodies para cada mesh
-  meshes.value.forEach((mesh) => {
-    if (mesh) {
-      createRigidBody(mesh, threeSceneConfig.physics)
-    }
+  meshes.forEach((mesh) => {
+    createRigidBody(mesh, threeSceneConfig.physics)
   })
 
-  console.log('✅ Physics setup complete')
+  console.log('✅ Physics initialized')
 }
 
 /**
- * Rotación manual para meshes sin física
+ * Rotación manual (cuando no hay física)
  */
-const rotationSpeed = ref(0.001)
-
 function rotateGeometries(delta: number) {
   const speed = currentBehavior.value.geometries.rotationSpeed
 
-  meshes.value.forEach((mesh, index) => {
-    if (mesh && !physicsInitialized.value) {
-      // Rotación manual cuando física está desactivada
+  meshes.forEach((mesh) => {
+    if (!physicsInitialized.value) {
       mesh.rotation.x += speed * delta * 60
       mesh.rotation.y += speed * delta * 60 * 1.5
     }
@@ -228,19 +228,49 @@ function rotateGeometries(delta: number) {
 }
 
 /**
- * Loop de renderizado
+ * Loop de animación
  */
-const { onBeforeRender } = useLoop()
+function animate() {
+  if (!scene || !camera || !renderer) return
 
-onBeforeRender(({ delta }) => {
-  // Actualizar física si está habilitada
+  const delta = clock.getDelta()
+
+  // Actualizar física o rotación manual
   if (physicsInitialized.value && performanceConfig.physicsEnabled) {
     updatePhysics(delta)
   } else {
-    // Si no hay física, rotar manualmente
     rotateGeometries(delta)
   }
-})
+
+  // Renderizar
+  renderer.render(scene, camera)
+
+  // Continuar loop
+  animationFrameId = requestAnimationFrame(animate)
+}
+
+/**
+ * Handle resize
+ */
+function handleResize() {
+  if (!camera || !renderer) return
+
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+}
+
+/**
+ * Actualizar tema
+ */
+function updateTheme(isDark: boolean) {
+  if (!renderer) return
+
+  // Cambiar colores de luces según tema si es necesario
+  // Por ahora mantenemos los colores constantes
+}
 
 /**
  * Watch scroll behavior changes
@@ -266,18 +296,64 @@ watch(currentBehavior, (newBehavior) => {
 })
 
 /**
- * Lifecycle
+ * Watch theme changes
+ */
+watch(() => props.isDark, (newIsDark) => {
+  updateTheme(newIsDark)
+})
+
+/**
+ * Lifecycle - Mount
  */
 onMounted(async () => {
-  // Esperar a que las meshes estén listas
-  await new Promise((resolve) => setTimeout(resolve, 100))
+  // Inicializar Three.js
+  initThreeScene()
 
-  // Setup physics si está habilitado
+  // Inicializar física
   if (performanceConfig.physicsEnabled) {
     await setupPhysics()
   }
 
-  console.log('🎨 ThreeBackground mounted')
+  // Iniciar loop de animación
+  animate()
+
+  // Agregar listener de resize
+  window.addEventListener('resize', handleResize)
+
+  console.log('🎨 ThreeBackground mounted (Three.js vanilla)')
+})
+
+/**
+ * Lifecycle - Unmount
+ */
+onUnmounted(() => {
+  // Cancelar animación
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId)
+  }
+
+  // Limpiar listeners
+  window.removeEventListener('resize', handleResize)
+
+  // Limpiar Three.js
+  meshes.forEach((mesh) => {
+    mesh.geometry.dispose()
+    if (mesh.material instanceof THREE.Material) {
+      mesh.material.dispose()
+    }
+  })
+
+  if (renderer) {
+    renderer.dispose()
+  }
+
+  // Limpiar referencias
+  scene = null
+  camera = null
+  renderer = null
+  meshes.length = 0
+
+  console.log('🧹 ThreeBackground cleaned up')
 })
 </script>
 
@@ -291,6 +367,12 @@ onMounted(async () => {
   z-index: 0;
   pointer-events: none;
   opacity: 0.8;
+}
+
+.three-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* Efecto de fade en bordes para integración suave */
