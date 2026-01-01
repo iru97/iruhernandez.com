@@ -7,22 +7,26 @@
 import { ref, onUnmounted } from 'vue'
 import type { Mesh, Object3D } from 'three'
 import type { PhysicsConfig } from '@/config/threeConfig'
-import RAPIER from '@dimforge/rapier3d'
 
 /**
  * Tipo para un cuerpo físico
  */
 interface PhysicsBody {
-  rigidBody: RAPIER.RigidBody
-  collider: RAPIER.Collider
+  rigidBody: any
+  collider: any
   mesh: Mesh
 }
+
+/**
+ * Variable para almacenar RAPIER una vez cargado
+ */
+let RAPIER: any = null
 
 /**
  * Composable de física
  */
 export function useThreePhysics() {
-  const world = ref<RAPIER.World | null>(null)
+  const world = ref<any>(null)
   const bodies = ref<PhysicsBody[]>([])
   const isInitialized = ref(false)
   const gravityMultiplier = ref(1)
@@ -32,7 +36,10 @@ export function useThreePhysics() {
    */
   async function initPhysics(config: PhysicsConfig) {
     try {
-      await RAPIER.init()
+      // Importar Rapier dinámicamente
+      if (!RAPIER) {
+        RAPIER = await import('@dimforge/rapier3d')
+      }
 
       const gravity = {
         x: config.gravity.x,
